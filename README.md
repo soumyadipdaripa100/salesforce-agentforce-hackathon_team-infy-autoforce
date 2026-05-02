@@ -1,8 +1,6 @@
-# salesforce-agentforce-hackathon_team-infy-autoforce
-
 # Electra Concierge - Automotive Customer Intelligence Platform
 
-**Salesforce Agentforce National Hackathon 2026 - Team Electra (Infosys)**
+**Salesforce Agentforce National Hackathon 2026 - Team Infy Autoforce**
 › Built with Agentforce + Data Cloud-style intent scoring + Automotive Cloud + Digital Engagement + Flow + Apex + Lightning Web Components
 
 ---
