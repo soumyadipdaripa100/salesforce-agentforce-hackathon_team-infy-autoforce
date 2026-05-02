@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Arrival_Email</name>
+        <label>Send Arrival Welcome Email</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Log_Fault</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Welcome to Electra - Your host is ready!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>formulaArrivalBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <assignments>
+        <name>Log_Fault</name>
+        <label>Log Fault</label>
+        <locationX>440</locationX>
+        <locationY>408</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Email_Present</name>
+        <label>Email Present?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>No (skip)</defaultConnectorLabel>
+        <rules>
+            <name>Has_Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Arrival_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Record-triggered on Test_Drive__c when Status flips to Arrived. Sends a welcome email to the customer letting them know their dealer host is ready in the showroom.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formulaArrivalBody</name>
+        <dataType>String</dataType>
+        <expression>&quot;Hi &quot; &amp; IF(ISBLANK({!$Record.Customer_Name__c}), &quot;there&quot;, {!$Record.Customer_Name__c}) &amp; &quot;,&quot; &amp;
+BR() &amp; BR() &amp;
+&quot;Welcome to Electra! Your host is ready to greet you in the showroom for your &quot; &amp;
+IF(ISBLANK({!$Record.Model_Interested__c}), &quot;Electra EV&quot;, {!$Record.Model_Interested__c}) &amp;
+&quot; test drive. Please check in at the front desk.&quot; &amp;
+BR() &amp; BR() &amp;
+&quot;Enjoy the ride!&quot; &amp; BR() &amp;
+&quot;- The Electra Team&quot;</expression>
+    </formulas>
+    <interviewLabel>TD Notify Customer Arrived {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TD Notify Customer Arrived</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Check_Email_Present</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>ISPICKVAL({!$Record.Status__c}, &apos;Arrived&apos;)</filterFormula>
+        <object>Test_Drive__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varFaultMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

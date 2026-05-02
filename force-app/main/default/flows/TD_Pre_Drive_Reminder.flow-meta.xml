@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Reminder_Email</name>
+        <label>Send Reminder Email</label>
+        <locationX>176</locationX>
+        <locationY>768</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>varEmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>varEmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Build_Experience_Email</name>
+        <label>Build Experience Drive Reminder Email</label>
+        <locationX>440</locationX>
+        <locationY>648</locationY>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reminder: Your </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> Experience Drive is Tomorrow!</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Hi </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Customer_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>,
+
+Your premium </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> Experience Drive is TOMORROW!
+
+Here&apos;s what to expect:
+- We&apos;ll deliver the </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> to your address at your scheduled time
+- Have your valid driver&apos;s license ready when we arrive
+- Enjoy the </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> for the full day — on your terms, at your pace
+
+Your Booking Reference: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>
+
+Looking forward to bringing the future to your door!
+
+The Electra Cars Team</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Reminder_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Build_Standard_Email</name>
+        <label>Build Standard Drive Reminder Email</label>
+        <locationX>176</locationX>
+        <locationY>648</locationY>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reminder: Your </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailSubject</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> Test Drive is Tomorrow!</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Hi </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Customer_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>,
+
+Exciting news — your </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varVehicle.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue> test drive is TOMORROW!
+
+Here are your booking details:
+Date &amp; Time: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Test_Drive_Date_Time__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>
+Dealership: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varDealership.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>
+Address: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varDealership.BillingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>, </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varDealership.BillingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varEmailBody</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>
+
+What to bring:
+- Valid driver&apos;s license
+- Arrive 10 minutes early
+
+Test drive duration: approximately 30 minutes
+
+We can&apos;t wait for you to experience the thrill of the Electra!
+
+See you tomorrow,
+The Electra Cars Team</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Reminder_Email</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Drive_Type</name>
+        <label>Standard or Experience Drive?</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <defaultConnector>
+            <targetReference>Build_Standard_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Standard Drive</defaultConnectorLabel>
+        <rules>
+            <name>Experience_Drive</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Drive_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Experience Drive</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Build_Experience_Email</targetReference>
+            </connector>
+            <label>Experience Drive</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Is_Tomorrow</name>
+        <label>Is Test Drive Tomorrow?</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <defaultConnectorLabel>Not Tomorrow</defaultConnectorLabel>
+        <rules>
+            <name>Is_Tomorrow</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varIsTomorrow</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Vehicle</targetReference>
+            </connector>
+            <label>Yes - Tomorrow</label>
+        </rules>
+    </decisions>
+    <description>Scheduled Flow that runs daily at 9AM. Processes Test Drive records with Status = Scheduled where the drive date is tomorrow. Sends different reminder emails for Standard Drive vs Experience Drive.</description>
+    <formulas>
+        <name>varIsTomorrow</name>
+        <dataType>Boolean</dataType>
+        <expression>DATEVALUE({!$Record.Test_Drive_Date_Time__c}) = (TODAY() + 1)</expression>
+    </formulas>
+    <label>TD Pre Drive Reminder</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Dealership</name>
+        <label>Get Dealership Details</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Drive_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Assigned_Dealership__c</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>varDealership</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>BillingStreet</queriedFields>
+        <queriedFields>BillingCity</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Vehicle</name>
+        <label>Get Vehicle Name</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Dealership</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Vehicle_Model__c</elementReference>
+            </value>
+        </filters>
+        <object>VehicleDefinition</object>
+        <outputReference>varVehicle</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_Is_Tomorrow</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Scheduled</stringValue>
+            </value>
+        </filters>
+        <object>Test_Drive__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2026-05-01</startDate>
+            <startTime>09:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varDealership</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>varEmailBody</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varEmailSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varVehicle</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>VehicleDefinition</objectType>
+    </variables>
+</Flow>

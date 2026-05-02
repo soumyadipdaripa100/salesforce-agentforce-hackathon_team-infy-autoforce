@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Post_Drive_Email</name>
+        <label>Send Post Drive Email</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Log_Fault</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>formulaSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>formulaBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <assignments>
+        <name>Log_Fault</name>
+        <label>Log Fault</label>
+        <locationX>440</locationX>
+        <locationY>408</locationY>
+        <assignmentItems>
+            <assignToReference>varFaultMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Should_Send_Email</name>
+        <label>Should Send Email?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Skip (follow-up or none)</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Send</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Next_Action__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Schedule Follow-up</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Next_Action__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>None</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Post_Drive_Email</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Record-triggered on Test_Drive__c when Outcome is captured. Sends a tailored follow-up email to the customer whose subject and body branch on Next_Action__c (Send Quote / Send Brochure / Schedule Second Drive). Skips when action is Schedule Follow-up or None (dealer handles).</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>formulaSubject</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.Next_Action__c}),
+  &quot;Send Quote&quot;, &quot;Your Electra quote is on the way&quot;,
+  &quot;Send Brochure&quot;, &quot;Your Electra brochure is attached&quot;,
+  &quot;Schedule Second Drive&quot;, &quot;Book another spin with Electra&quot;,
+  &quot;Thanks for visiting Electra&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>formulaBody</name>
+        <dataType>String</dataType>
+        <expression>&quot;Hi &quot; &amp; IF(ISBLANK({!$Record.Customer_Name__c}), &quot;there&quot;, {!$Record.Customer_Name__c}) &amp; &quot;,&quot; &amp; BR() &amp; BR() &amp;
+&quot;Thank you for test driving the &quot; &amp;
+IF(ISBLANK({!$Record.Model_Interested__c}), &quot;Electra EV&quot;, {!$Record.Model_Interested__c}) &amp;
+&quot; with us today.&quot; &amp; BR() &amp; BR() &amp;
+CASE(TEXT({!$Record.Next_Action__c}),
+  &quot;Send Quote&quot;, &quot;Our team will email a personalized quote within 24 hours, including financing and trade-in options.&quot;,
+  &quot;Send Brochure&quot;, &quot;Attached is the full specification brochure for your reference. Reply to this email any time with questions.&quot;,
+  &quot;Schedule Second Drive&quot;, &quot;We would love to have you back for another drive. Reply with a preferred date and we will coordinate a session.&quot;,
+  &quot;&quot;) &amp; BR() &amp; BR() &amp;
+&quot;- The Electra Team&quot;</expression>
+    </formulas>
+    <interviewLabel>TD Notify Post Drive {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TD Notify Post Drive</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Should_Send_Email</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND(
+  NOT(ISBLANK(TEXT({!$Record.Outcome__c}))),
+  NOT(ISBLANK(TEXT({!$Record.Next_Action__c})))
+)</filterFormula>
+        <object>Test_Drive__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varFaultMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
