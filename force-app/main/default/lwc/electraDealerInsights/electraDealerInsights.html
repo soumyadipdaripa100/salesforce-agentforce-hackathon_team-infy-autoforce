@@ -1,0 +1,180 @@
+<template>
+    <section class="ins">
+
+        <!-- ============ Friendly card when the user isn't linked to a dealership ============ -->
+        <template lwc:if={noDealerLink}>
+            <div class="no-dealer">
+                <div class="no-dealer__icon" aria-hidden="true">&#9888;</div>
+                <h2 class="no-dealer__title">Dealership not linked</h2>
+                <p class="no-dealer__msg">{contextError}</p>
+                <p class="no-dealer__hint">
+                    Your portal user needs a Contact attached to a dealer Account before insights can show.
+                </p>
+            </div>
+        </template>
+
+        <!-- ============ Dashboard ============ -->
+        <template lwc:if={hasContext}>
+
+            <header class="ins__head">
+                <div class="ins__heading">
+                    <span class="ins__eyebrow">
+                        <span class="ins__eyedot"></span>
+                        DEALER INSIGHTS
+                    </span>
+                    <h1 class="ins__title">{pageTitle}</h1>
+                    <p class="ins__sub">
+                        <strong>{dealerName}</strong>
+                        <template lwc:if={dealerCity}>
+                            <span class="ins__sep">&middot;</span>
+                            {dealerCity}
+                        </template>
+                        <span class="ins__sep">&middot;</span>
+                        <span class="ins__window">60-day window</span>
+                    </p>
+                </div>
+                <div class="ins__actions">
+                    <button type="button" class="btn btn--ghost" onclick={handleRefresh}>
+                        &#x21bb; Refresh
+                    </button>
+                </div>
+            </header>
+
+            <template lwc:if={snapshotError}>
+                <div class="alert alert--error">{snapshotError}</div>
+            </template>
+
+            <!-- KPI strip -->
+            <div class="kpis">
+                <template for:each={kpis} for:item="k">
+                    <div key={k.key} class="kpi">
+                        <div class="kpi__label">{k.label}</div>
+                        <div class="kpi__value">{k.value}</div>
+                        <div class="kpi__hint">{k.hint}</div>
+                    </div>
+                </template>
+            </div>
+
+            <template lwc:if={hasSnapshot}>
+                <div class="grid">
+
+                    <!-- ============ LEFT: Conversion funnel ============ -->
+                    <article class="card card--funnel">
+                        <header class="card__head">
+                            <h2 class="card__title">Conversion funnel</h2>
+                            <p class="card__sub">From booking to drive completed</p>
+                        </header>
+
+                        <div class="funnel">
+                            <template for:each={funnelRows} for:item="row">
+                                <div key={row.key} class="frow">
+                                    <div class="frow__top">
+                                        <span class="frow__label">{row.label}</span>
+                                        <template lwc:if={row.showDrop}>
+                                            <span class="frow__drop">&minus;{row.dropOffPct}%</span>
+                                        </template>
+                                    </div>
+                                    <div class="ftrack">
+                                        <div class={row.barClass} style={row.barStyle}>
+                                            <span class="fbar__count">{row.count}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <template lwc:if={lostStrip}>
+                            <div class="lost">
+                                <div class="lost__icon" aria-hidden="true">&#9888;</div>
+                                <div class="lost__body">
+                                    <strong>Lost: {lostStrip.total}</strong>
+                                    <span class="lost__detail">{lostStrip.cancelled} cancelled &middot; {lostStrip.noShow} no-show</span>
+                                </div>
+                            </div>
+                        </template>
+                    </article>
+
+                    <!-- ============ RIGHT: Top vehicles + Outcome mix ============ -->
+                    <div class="rstack">
+
+                        <article class="card card--vehicles">
+                            <header class="card__head">
+                                <h2 class="card__title">Top vehicles booked</h2>
+                                <p class="card__sub">Most-requested models in this window</p>
+                            </header>
+
+                            <template lwc:if={hasVehicles}>
+                                <div class="vlist">
+                                    <template for:each={vehicleRows} for:item="v">
+                                        <div key={v.key} class="vrow">
+                                            <span class="vrow__rank">{v.rank}</span>
+                                            <div class="vrow__body">
+                                                <div class="vrow__top">
+                                                    <span class="vrow__label">{v.label}</span>
+                                                    <span class="vrow__count">{v.count}</span>
+                                                </div>
+                                                <div class="vtrack">
+                                                    <div class="vbar" style={v.barStyle}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template lwc:else>
+                                <p class="empty empty--inline">No vehicle data in this window.</p>
+                            </template>
+                        </article>
+
+                        <article class="card card--outcomes">
+                            <header class="card__head">
+                                <h2 class="card__title">Outcome mix</h2>
+                                <p class="card__sub">How drives converted</p>
+                            </header>
+
+                            <template lwc:if={hasOutcomes}>
+                                <div class="ostack">
+                                    <template for:each={outcomeSegments} for:item="o">
+                                        <div key={o.key} class={o.cls} style={o.style} title={o.label}></div>
+                                    </template>
+                                </div>
+
+                                <ul class="olegend" role="list">
+                                    <template for:each={outcomeSegments} for:item="o">
+                                        <li key={o.key} class="oitem">
+                                            <span class={o.cls}></span>
+                                            <span class="oitem__label">{o.label}</span>
+                                            <span class="oitem__count">{o.count}</span>
+                                            <span class="oitem__pct">{o.pct}%</span>
+                                        </li>
+                                    </template>
+                                    <template lwc:if={outcomePending}>
+                                        <li class="oitem oitem--pending">
+                                            <span class="oc oc--pending"></span>
+                                            <span class="oitem__label">Outcome pending</span>
+                                            <span class="oitem__count">{outcomePending}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template lwc:else>
+                                <p class="empty empty--inline">No outcomes captured yet.</p>
+                            </template>
+                        </article>
+
+                    </div>
+
+                </div>
+            </template>
+
+            <template lwc:if={isLoading}>
+                <div class="empty">
+                    <p>Loading insights&hellip;</p>
+                </div>
+            </template>
+
+        </template>
+    </section>
+</template>

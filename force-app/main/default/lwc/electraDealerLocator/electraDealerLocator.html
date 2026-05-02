@@ -1,0 +1,182 @@
+<template>
+    <section class="locator">
+        <header class="hero">
+            <div class="hero__text">
+                <p class="hero__eyebrow">
+                    <span class="hero__dot"></span>
+                    SHOWROOMS
+                </p>
+                <h1 class="hero__title">Step inside <em>Electra</em>.</h1>
+                <p class="hero__sub">{subtitle}</p>
+            </div>
+
+            <div class="controls">
+                <div class="zipbox">
+                    <span class="zipbox__icon">&#9889;</span>
+                    <input type="text"
+                           class="zipbox__input"
+                           inputmode="numeric"
+                           maxlength="5"
+                           placeholder="ZIP code"
+                           value={zipInput}
+                           oninput={handleZipInput} />
+                </div>
+                <button class="geo-btn" onclick={handleUseMyLocation}>
+                    <span class="geo-btn__icon">&#9678;</span>
+                    <span class="geo-btn__label">Near me</span>
+                </button>
+            </div>
+        </header>
+
+        <template lwc:if={headerNote}>
+            <div class="note">
+                <span class="note__dot"></span>
+                {headerNote}
+            </div>
+        </template>
+
+        <div class="mobile-toggle">
+            <button class={listToggleClass} onclick={handleShowList}>List</button>
+            <button class={mapToggleClass} onclick={handleShowMap}>Map</button>
+        </div>
+
+        <template lwc:if={loadError}>
+            <div class="error">We couldn't load dealers right now. Please refresh the page.</div>
+        </template>
+
+        <template lwc:if={showEmptyState}>
+            <div class="empty">
+                <h2 class="empty__title">We're rolling out.</h2>
+                <p class="empty__desc">Join the waitlist &mdash; we'll reach out the moment an Electra showroom opens near you.</p>
+            </div>
+        </template>
+
+        <template lwc:if={hasDealers}>
+            <div class="split">
+                <aside class={listClass}>
+                    <ul class="cards" role="list">
+                        <template for:each={processedDealers} for:item="d">
+                            <li key={d.id} class={d.cardClass} data-id={d.id} onclick={handleCardClick} tabindex="0">
+                                <div class="card__bar"></div>
+                                <div class="card__body">
+                                    <div class="card__head">
+                                        <span class="card__idx">{d.idxLabel}</span>
+                                        <span class="card__name">{d.name}</span>
+                                    </div>
+                                    <p class="card__loc">{d.city}, {d.state}</p>
+
+                                    <dl class="card__details">
+                                        <div class="detail">
+                                            <dt>Address</dt>
+                                            <dd>{d.address}</dd>
+                                        </div>
+                                        <div class="detail">
+                                            <dt>Phone</dt>
+                                            <dd>{d.phone}</dd>
+                                        </div>
+                                    </dl>
+
+                                    <!-- <div class="card__meta">
+                                        <template lwc:if={d.hasDistance}>
+                                            <span class="dist-chip">
+                                                <span class="dist-chip__bolt">&#9889;</span>
+                                                {d.distanceLabel} from you
+                                            </span>
+                                        </template>
+                                    </div> -->
+
+                                    <div class="card__cta">
+                                        <button class="btn btn--primary"
+                                                data-id={d.id}
+                                                onclick={handleBook}>
+                                            Book a Test Drive
+                                        </button>
+                                        <a class="btn btn--ghost"
+                                           href={d.directionsHref}
+                                           target="_blank"
+                                           rel="noopener"
+                                           onclick={handleDirectionsClick}>
+                                            Directions
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </aside>
+
+                <section class={mapClass}>
+                    <template lwc:if={selectedDealer}>
+                        <div class="hero-gallery">
+                            <template for:each={selectedGallery.images} for:item="img">
+                                <figure key={img.key} class={img.className}>
+                                    <img src={img.src} alt={img.alt} loading="lazy" />
+                                </figure>
+                            </template>
+                            <div class="hero-gallery__scrim"></div>
+                            <div class="hero-gallery__overlay">
+                                <!-- <span class="hero-gallery__eyebrow">
+                                    <span class="hero-gallery__eyedot"></span>
+                                    IN FOCUS
+                                </span> -->
+                                <h3 class="hero-gallery__name">{selectedDealer.name}</h3>
+                                <p class="hero-gallery__sub">
+                                    {selectedDealer.city}, {selectedDealer.state}
+                                    <template lwc:if={selectedDealer.hasDistance}>
+                                        <span class="hero-gallery__sep">&middot;</span>
+                                        <span>{selectedDealer.distanceLabel} away</span>
+                                    </template>
+                                </p>
+                            </div>
+                            <div class="hero-gallery__dots" role="tablist" aria-label="Showroom photos">
+                                <template for:each={selectedGallery.dots} for:item="d">
+                                    <button key={d.key}
+                                            type="button"
+                                            class={d.className}
+                                            data-index={d.index}
+                                            aria-label={d.label}
+                                            onclick={handleImageDot}></button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="map-wrap">
+                        <lightning-map
+                            map-markers={mapMarkers}
+                            selected-marker-value={selectedId}
+                            center={mapCenter}
+                            zoom-level={mapZoom}
+                            list-view="hidden"
+                            onmarkerselect={handleMarkerSelect}>
+                        </lightning-map>
+                    </div>
+
+                    <template lwc:if={selectedDealer}>
+                        <div class="spotlight">
+                            <div class="spotlight__actionrow">
+                                <button class="spotlight__cta"
+                                        data-id={selectedDealer.id}
+                                        onclick={handleBook}>
+                                    Schedule a Visit
+                                    <span class="spotlight__arrow">&rarr;</span>
+                                </button>
+                            </div>
+                            <div class="spotlight__grid">
+                                <template for:each={selectedHighlights} for:item="h">
+                                    <div key={h.key} class="hi">
+                                        <span class="hi__icon">{h.icon}</span>
+                                        <div class="hi__body">
+                                            <div class="hi__label">{h.label}</div>
+                                            <div class="hi__value">{h.value}</div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+            </div>
+        </template>
+    </section>
+</template>

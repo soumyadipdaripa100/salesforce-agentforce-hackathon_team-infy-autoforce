@@ -1,0 +1,69 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open" onclick={handleCancel}>
+        <div class="slds-modal__container" onclick={stopPropagation}>
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCancel}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                </button>
+                <h1 class="slds-modal__title slds-hyphenate">Capture Drive Outcome</h1>
+                <p class="slds-p-top_x-small slds-text-body_small">{customerName} — {vehicleModel}</p>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+                <lightning-combobox
+                    label="Outcome"
+                    name="outcome"
+                    value={outcome}
+                    options={outcomeOptions}
+                    onchange={handleOutcome}
+                    required>
+                </lightning-combobox>
+
+                <lightning-textarea
+                    class="slds-m-top_small"
+                    label="Notes"
+                    name="notes"
+                    value={notes}
+                    placeholder="What did the customer like? Trade-in? Financing interest?"
+                    onchange={handleNotes}>
+                </lightning-textarea>
+
+                <lightning-combobox
+                    class="slds-m-top_small"
+                    label="Next Action"
+                    name="nextAction"
+                    value={nextAction}
+                    options={nextActionOptions}
+                    onchange={handleNextAction}>
+                </lightning-combobox>
+
+                <lightning-input
+                    class="slds-m-top_small"
+                    label="Competitor Considered"
+                    name="competitor"
+                    value={competitor}
+                    placeholder="e.g., BMW i7, Tesla Model S"
+                    onchange={handleCompetitor}>
+                </lightning-input>
+
+                <template if:true={showOpportunityBanner}>
+                    <div class="slds-notify slds-notify_alert slds-alert_success slds-m-top_medium" role="alert">
+                        <lightning-icon icon-name="utility:success" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                        An Opportunity will be auto-created and linked to this drive.
+                    </div>
+                </template>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={handleCancel} disabled={saving}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleSave} disabled={saveDisabled}>
+                    <template if:true={saving}>
+                        <lightning-spinner alternative-text="Saving" size="x-small" variant="inverse"></lightning-spinner>
+                    </template>
+                    Save Outcome
+                </button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

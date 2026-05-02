@@ -1,0 +1,133 @@
+<template>
+    <c-electra-top-nav active-page="dealer"></c-electra-top-nav>
+
+    <section class="showrooms">
+        <header class="hero">
+            <p class="hero__eyebrow">
+                <span class="hero__dot"></span>
+                SHOWROOMS
+            </p>
+            <h1 class="hero__title">Visit <em>Electra</em>.</h1>
+            <p class="hero__sub">{subtitle}</p>
+        </header>
+
+        <template lwc:if={loadError}>
+            <div class="error">
+                We couldn&rsquo;t load our showrooms right now. Please refresh the page.
+            </div>
+        </template>
+
+        <template lwc:if={showEmptyState}>
+            <div class="empty">
+                <h2 class="empty__title">We&rsquo;re rolling out.</h2>
+                <p class="empty__desc">
+                    Join the waitlist &mdash; we&rsquo;ll let you know the moment an Electra showroom opens near you.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={hasDealers}>
+            <div class="grid">
+                <template for:each={processedShowrooms} for:item="s">
+                    <article key={s.id} class="card">
+                        <div class="card__gallery">
+                            <template for:each={s.images} for:item="img">
+                                <figure key={img.key} class={img.className}>
+                                    <img src={img.src} alt={img.alt} loading="lazy" />
+                                </figure>
+                            </template>
+                            <span class="card__idx">{s.indexLabel}</span>
+                            <div class="gdots" role="tablist" aria-label="Showroom photos">
+                                <template for:each={s.dots} for:item="d">
+                                    <button key={d.key}
+                                            type="button"
+                                            class={d.className}
+                                            data-card={d.dealerId}
+                                            data-index={d.index}
+                                            aria-label={d.label}
+                                            onclick={handleImageDot}></button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="card__body">
+                            <header class="card__head">
+                                <div class="card__titlewrap">
+                                    <h2 class="card__name">{s.name}</h2>
+                                    <span class="card__city">{s.cityState}</span>
+                                </div>
+                                <p class="card__tagline">{s.tagline}</p>
+                            </header>
+
+                            <p class="card__blurb">{s.blurb}</p>
+
+                            <ul class="pills" role="list">
+                                <template for:each={s.features} for:item="f">
+                                    <li key={f.key} class="pill">
+                                        <span class="pill__icon" aria-hidden="true">{f.icon}</span>
+                                        <span class="pill__val">{f.value}</span>
+                                    </li>
+                                </template>
+                                <template lwc:if={s.zipCountLabel}>
+                                    <li class="pill pill--muted">
+                                        <span class="pill__icon" aria-hidden="true">&#9733;</span>
+                                        <span class="pill__val">{s.zipCountLabel}</span>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <dl class="meta">
+                                <div class="meta__row">
+                                    <dt>Address</dt>
+                                    <dd>{s.address}</dd>
+                                </div>
+                                <div class="meta__row">
+                                    <dt>Phone</dt>
+                                    <dd>
+                                        <template lwc:if={s.telHref}>
+                                            <a href={s.telHref} class="meta__link">{s.phone}</a>
+                                        </template>
+                                        <template lwc:else>
+                                            {s.phone}
+                                        </template>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <details class="hours">
+                                <summary class="hours__summary">
+                                    <span class="hours__label">Hours</span>
+                                    <span class="hours__chev" aria-hidden="true">&#9662;</span>
+                                </summary>
+                                <ul class="hours__list" role="list">
+                                    <template for:each={s.hours} for:item="h">
+                                        <li key={h.key} class="hours__row">
+                                            <span class="hours__day">{h.label}</span>
+                                            <span class="hours__val">{h.value}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </details>
+
+                            <div class="card__cta">
+                                <button class="btn btn--primary"
+                                        type="button"
+                                        data-id={s.id}
+                                        onclick={handleBook}>
+                                    Book a Test Drive
+                                </button>
+                                <a class="btn btn--ghost"
+                                   href={s.directionsHref}
+                                   target="_blank"
+                                   rel="noopener"
+                                   onclick={handleDirectionsClick}>
+                                    Directions
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+            </div>
+        </template>
+    </section>
+</template>

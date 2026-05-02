@@ -1,0 +1,64 @@
+<template>
+    <article class="booking-card slds-box slds-m-bottom_small">
+        <div class="slds-grid slds-grid_align-spread slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <span class={badgeClass}>{status}</span>
+                    <span class="slds-text-heading_small slds-m-left_small">{customerName}</span>
+                    <span class="slds-text-body_small slds-m-left_small slds-text-color_weak">· {timeLabel}</span>
+                </div>
+                <div class="slds-text-body_small slds-m-top_xx-small">
+                    <lightning-icon icon-name="standard:vehicle_definition" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                    {model} · {driveType}
+                </div>
+                <template if:true={contactLine}>
+                    <div class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">{contactLine}</div>
+                </template>
+                <template if:true={durationLine}>
+                    <div class="slds-text-body_small slds-text-color_success slds-m-top_xx-small">{durationLine}</div>
+                </template>
+                <template if:true={outcomeLine}>
+                    <div class="slds-text-body_small slds-m-top_xx-small outcome-line">{outcomeLine}</div>
+                </template>
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-grid slds-grid_align-end slds-grid_vertical-align-center slds-m-top_x-small">
+                <template if:true={hasPrimaryAction}>
+                    <lightning-button
+                        label={primaryLabel}
+                        variant={primaryVariant}
+                        onclick={handlePrimary}
+                        disabled={busy}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                </template>
+                <template if:true={needsOutcome}>
+                    <lightning-button
+                        label="Capture Outcome"
+                        variant="brand"
+                        icon-name="utility:edit"
+                        onclick={handleCaptureOutcome}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                </template>
+                <lightning-button-icon
+                    icon-name="utility:info_alt"
+                    alternative-text={expandToggleLabel}
+                    title={expandToggleLabel}
+                    onclick={toggleBrief}>
+                </lightning-button-icon>
+            </div>
+        </div>
+
+        <template if:true={expanded}>
+            <div class="slds-box slds-box_xx-small slds-m-top_small brief-panel">
+                <template if:true={briefLoading}>
+                    <lightning-spinner alternative-text="Loading brief" size="small"></lightning-spinner>
+                </template>
+                <template if:false={briefLoading}>
+                    <pre class="brief-text">{brief}</pre>
+                </template>
+            </div>
+        </template>
+    </article>
+</template>

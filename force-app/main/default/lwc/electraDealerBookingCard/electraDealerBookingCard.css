@@ -1,0 +1,22 @@
+.booking-card {
+    border-left: 4px solid #1B4D3E;
+    background: #fff;
+    transition: box-shadow 150ms ease-in-out;
+}
+.booking-card:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+.outcome-line {
+    color: #00857A;
+    font-weight: 600;
+}
+.brief-panel {
+    background: #f4f8f6;
+    border-left: 3px solid #00D4AA;
+}
+.brief-text {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 0.85rem;
+    margin: 0;
+}

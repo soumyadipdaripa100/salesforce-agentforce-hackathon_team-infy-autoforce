@@ -1,0 +1,186 @@
+:host {
+    --electra-primary: #1B4D3E;
+    --electra-accent: #00D4AA;
+    --electra-dark: #0A0A0A;
+    --electra-white: #FFFFFF;
+    --surface: #101416;
+    --surface-line: rgba(255, 255, 255, 0.08);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.72);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --electra-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    display: block;
+    font-family: var(--electra-font);
+    color: var(--text-primary);
+}
+
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--surface-line);
+}
+
+.topnav__wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+/* ---------- Brand ---------- */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    min-width: 140px;
+    transition: transform 0.2s ease;
+}
+
+.brand:hover {
+    transform: translateX(-2px);
+}
+
+.brand__mark {
+    color: var(--electra-accent);
+    font-size: 1.1rem;
+    text-shadow: 0 0 12px rgba(0, 212, 170, 0.55);
+}
+
+.brand__name {
+    font-family: 'Konexy', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--electra-white);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.brand__ev {
+    font-family: 'Konexy', 'Playfair Display', Georgia, serif;
+    color: var(--electra-accent);
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 16px rgba(0, 212, 170, 0.55);
+}
+
+/* ---------- Tabs ---------- */
+
+.nav { flex: 1; }
+
+.tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tab:hover {
+    color: var(--electra-white);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.tab--active {
+    color: var(--electra-dark);
+    background: var(--electra-accent);
+    box-shadow: 0 4px 14px rgba(0, 212, 170, 0.38);
+}
+
+.topnav__spacer {
+    min-width: 140px;
+    flex-shrink: 0;
+}
+
+/* ---------- Dealer Login auth tab (extreme right) ---------- */
+
+.auth-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem 0.5rem 0.9rem;
+    border: 1px solid rgba(0, 212, 170, 0.35);
+    border-radius: 999px;
+    color: var(--electra-white);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: rgba(0, 212, 170, 0.06);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.auth-tab:hover {
+    background: rgba(0, 212, 170, 0.14);
+    border-color: var(--electra-accent);
+    color: var(--electra-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 212, 170, 0.25);
+}
+
+.auth-tab--active {
+    background: var(--electra-accent);
+    color: var(--electra-dark);
+    border-color: var(--electra-accent);
+    box-shadow: 0 4px 14px rgba(0, 212, 170, 0.38);
+}
+
+.auth-tab__icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+    .topnav__wrap { padding: 0.75rem 1.25rem; gap: 1rem; }
+    .topnav__spacer { display: none; }
+    .tabs { justify-content: flex-start; }
+}
+
+@media (max-width: 640px) {
+    .topnav__wrap { padding: 0.65rem 1rem; }
+    .brand__name { display: none; }
+    .brand { min-width: 0; }
+    .tab { font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.45rem 0.75rem; }
+    .auth-tab__label { display: none; }
+    .auth-tab { padding: 0.45rem 0.6rem; }
+}

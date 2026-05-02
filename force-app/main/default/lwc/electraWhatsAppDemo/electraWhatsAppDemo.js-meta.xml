@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+    <masterLabel>Electra WhatsApp Demo</masterLabel>
+    <description>Side-by-side WhatsApp simulation: customer phone, Agentforce reasoning, business inbox.</description>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="pageTitle"
+                      type="String"
+                      label="Page title"
+                      default="WhatsApp Booking — Live Agentforce Demo" />
+            <property name="agentApiName"
+                      type="String"
+                      label="Agentforce Agent API Name"
+                      description="Paste from Setup -> Einstein -> Agentforce -> open the agent -> Agent API Name."
+                      default="" />
+            <property name="customerName"
+                      type="String"
+                      label="Customer display name"
+                      default="Priya Sharma" />
+            <property name="customerPhone"
+                      type="String"
+                      label="Customer phone (display only)"
+                      default="+91 98765 43210" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

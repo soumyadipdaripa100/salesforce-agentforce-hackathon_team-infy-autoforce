@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Electra Dealer Console</masterLabel>
+    <description>Dealer-facing console to manage today's and upcoming test drive bookings end-to-end.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightningCommunity__Default">
+            <property name="dealerAccountId" type="String" label="Dealer Account Id" description="Restrict bookings to one dealership. Leave blank to show all."/>
+            <property name="upcomingDaysAhead" type="Integer" label="Upcoming Window (days)" default="7"/>
+            <property name="pollSeconds" type="Integer" label="Auto-Refresh Seconds" default="30" description="Set 0 to disable polling."/>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="upcomingDaysAhead" type="Integer" label="Upcoming Window (days)" default="7"/>
+            <property name="pollSeconds" type="Integer" label="Auto-Refresh Seconds" default="30"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

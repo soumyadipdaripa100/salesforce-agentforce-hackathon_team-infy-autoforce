@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Electra Dealer Metrics</masterLabel>
+    <description>KPI tile showing today's bookings, show-up rate, conversion rate, and hot leads for the dealer console.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightningCommunity__Default">
+            <property name="dealerAccountId" type="String" label="Dealer Account Id" description="Leave blank to aggregate across all dealers (org-wide view)."/>
+            <property name="daysBack" type="Integer" label="Days Back Window" default="7" description="Days of history to blend into rates (0 = today only)."/>
+            <property name="refreshSeconds" type="Integer" label="Auto-Refresh Seconds" default="60" description="Polling interval. Set 0 to disable."/>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="daysBack" type="Integer" label="Days Back Window" default="7"/>
+            <property name="refreshSeconds" type="Integer" label="Auto-Refresh Seconds" default="60"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

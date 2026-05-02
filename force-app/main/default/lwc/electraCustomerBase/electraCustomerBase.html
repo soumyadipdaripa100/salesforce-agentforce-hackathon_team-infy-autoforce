@@ -1,0 +1,147 @@
+<template>
+    <section class="cb">
+
+        <!-- ============ Friendly card when the user isn't linked to a dealership ============ -->
+        <template lwc:if={noDealerLink}>
+            <div class="no-dealer">
+                <div class="no-dealer__icon" aria-hidden="true">&#9888;</div>
+                <h2 class="no-dealer__title">Dealership not linked</h2>
+                <p class="no-dealer__msg">{contextError}</p>
+                <p class="no-dealer__hint">
+                    Your portal user needs a Contact attached to a dealer Account before customers can show.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={hasContext}>
+
+            <header class="cb__head">
+                <div class="cb__heading">
+                    <span class="cb__eyebrow">
+                        <span class="cb__eyedot"></span>
+                        SHOWROOM CUSTOMERS
+                    </span>
+                    <h1 class="cb__title">{pageTitle}</h1>
+                    <p class="cb__sub">
+                        <strong>{dealerName}</strong>
+                        <template lwc:if={dealerCity}>
+                            <span class="cb__sep">&middot;</span>
+                            {dealerCity}
+                        </template>
+                        <span class="cb__sep">&middot;</span>
+                        <span>{summaryLabel}</span>
+                    </p>
+                </div>
+                <div class="cb__actions">
+                    <button type="button" class="btn btn--ghost" onclick={handleRefresh}>
+                        &#x21bb; Refresh
+                    </button>
+                </div>
+            </header>
+
+            <template lwc:if={loadError}>
+                <div class="alert alert--error">{loadError}</div>
+            </template>
+
+            <!-- Toolbar: search + filters -->
+            <div class="toolbar">
+                <div class="search">
+                    <span class="search__icon" aria-hidden="true">&#128269;</span>
+                    <input type="search"
+                           class="search__input"
+                           placeholder="Search by name, email, phone, vehicle"
+                           oninput={handleSearch}
+                           value={searchTerm} />
+                    <template lwc:if={searchTerm}>
+                        <button type="button"
+                                class="search__clear"
+                                onclick={handleClearSearch}
+                                aria-label="Clear search">&times;</button>
+                    </template>
+                </div>
+
+                <div class="chips" role="group" aria-label="Filter by status">
+                    <template for:each={filterChips} for:item="c">
+                        <button key={c.id}
+                                type="button"
+                                class={c.className}
+                                data-id={c.id}
+                                onclick={handleFilterClick}>
+                            {c.label}
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <template lwc:if={hasRows}>
+                <div class="tablewrap">
+                    <table class="ctable" role="grid">
+                        <thead>
+                            <tr>
+                                <th class="col-customer">Customer</th>
+                                <th class="col-contact">Contact</th>
+                                <th class="col-vehicle">Vehicle</th>
+                                <th class="col-when">Date / Time</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={rows} for:item="r">
+                                <tr key={r.id}>
+                                    <td class="col-customer">
+                                        <div class="cust">
+                                            <span class={r.avatarClass} aria-hidden="true">{r.initials}</span>
+                                            <div class="cust__body">
+                                                <span class="cust__name">{r.name}</span>
+                                                <span class="cust__ref">{r.bookingRef}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-contact">
+                                        <template lwc:if={r.email}>
+                                            <a href={r.emailHref} class="contact contact--email">
+                                                <span class="contact__icon" aria-hidden="true">&#9993;</span>
+                                                <span>{r.email}</span>
+                                            </a>
+                                        </template>
+                                        <template lwc:if={r.phone}>
+                                            <a href={r.phoneHref} class="contact contact--phone">
+                                                <span class="contact__icon" aria-hidden="true">&#9742;</span>
+                                                <span>{r.phone}</span>
+                                            </a>
+                                        </template>
+                                    </td>
+                                    <td class="col-vehicle">
+                                        <span class="vehicle">{r.vehicle}</span>
+                                        <span class="drive-type">{r.driveType}</span>
+                                    </td>
+                                    <td class="col-when">
+                                        <span class="when__date">{r.dateLabel}</span>
+                                        <span class="when__time">{r.timeLabel}</span>
+                                    </td>
+                                    <td class="col-status">
+                                        <span class={r.statusClass}>{r.status}</span>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+
+            <template lwc:elseif={hasAnyRecords}>
+                <div class="empty">
+                    <p>No customers match this filter.</p>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <div class="empty">
+                    <p>No customers yet for {dealerName}. Once you have test drive bookings they'll show up here.</p>
+                </div>
+            </template>
+
+        </template>
+    </section>
+</template>

@@ -1,0 +1,117 @@
+<template>
+    <c-electra-top-nav active-page="catalog"></c-electra-top-nav>
+
+    <section class="catalogue">
+
+        <header class="catalogue__hero">
+            <p class="catalogue__eyebrow">
+                <span class="catalogue__dot"></span>
+                THE COLLECTION
+            </p>
+            <h1 class="catalogue__title">Four Vehicles <em>one Family</em></h1>
+            <p class="catalogue__sub">Every Electra is engineered from a clean sheet for the electric future. Zero emissions. Uncompromised driving. Designed to last.</p>
+        </header>
+
+        <template lwc:if={hasModels}>
+            <nav class="tabs">
+                <template for:each={tabs} for:item="t">
+                    <button key={t.id}
+                            class={t.className}
+                            data-id={t.id}
+                            onclick={handleTabClick}>
+                        <span class="tab__num">{t.num}</span>
+                        <span class="tab__name">{t.shortName}</span>
+                        <span class="tab__bar"></span>
+                    </button>
+                </template>
+            </nav>
+
+            <article class="showcase">
+                <div class="showcase__image" data-model={activeModel.id}>
+                    <span class="showcase__badge">{activeModel.badge}</span>
+                    <img src={activeModel.imageUrl}
+                         alt={activeModel.name}
+                         class="showcase__img" />
+                    <span class="showcase__number">{activeModel.num}</span>
+                </div>
+
+                <div class="showcase__content">
+                    <p class="showcase__highlight">{activeModel.highlight}</p>
+                    <h2 class={activeModel.titleClass}>{activeModel.name}</h2>
+                    <p class="showcase__tagline">{activeModel.tagline}</p>
+                    <p class="showcase__desc">{activeModel.description}</p>
+
+                    <dl class="specs">
+                        <template for:each={specRows} for:item="s">
+                            <div key={s.key} class="spec">
+                                <dt>{s.label}</dt>
+                                <dd class={s.valueClass}>{s.value}</dd>
+                            </div>
+                        </template>
+                    </dl>
+
+                    <div class="price-block">
+                        <p class="price-label">Starting from</p>
+                        <p class="price">{activeModel.price}</p>
+                    </div>
+
+                    <div class="cta-row">
+                        <button class="btn btn--primary" onclick={handleBook}>
+                            Book Test Drive
+                            <span class="btn__arrow">&rsaquo;</span>
+                        </button>
+                        <button class="btn btn--secondary" onclick={handleConfigure}>
+                            Configure
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <section class="compare">
+                <header class="compare__header">
+                    <p class="compare__eyebrow">
+                        <span class="compare__dot"></span>
+                        SIDE BY SIDE
+                    </p>
+                    <h3 class="compare__title">Compare the lineup</h3>
+                </header>
+
+                <div class="compare__wrap">
+                    <table class="compare__table">
+                        <thead>
+                            <tr>
+                                <th class="th-label"></th>
+                                <template for:each={compareHeaders} for:item="h">
+                                    <th key={h.id}
+                                        class={h.className}
+                                        data-id={h.id}
+                                        onclick={handleCompareColumnClick}>
+                                        <div class="th__name">{h.shortName}</div>
+                                        <div class="th__price">{h.price}</div>
+                                    </th>
+                                </template>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={compareRows} for:item="row">
+                                <tr key={row.key}>
+                                    <th scope="row" class="row-label">{row.label}</th>
+                                    <template for:each={row.values} for:item="v">
+                                        <td key={v.modelId}>{v.value}</td>
+                                    </template>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </template>
+
+        <template lwc:if={loadError}>
+            <div class="catalogue__error">
+                We couldn&rsquo;t load the catalogue right now. Please refresh the page.
+            </div>
+        </template>
+
+    </section>
+</template>

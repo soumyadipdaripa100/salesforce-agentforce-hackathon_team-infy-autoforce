@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="Dealer Performance" icon-name="standard:dashboard">
+        <lightning-button-icon
+            slot="actions"
+            icon-name="utility:refresh"
+            alternative-text="Refresh"
+            title="Refresh metrics"
+            onclick={handleRefresh}>
+        </lightning-button-icon>
+
+        <template if:true={error}>
+            <div class="slds-p-around_medium slds-text-color_error">{error}</div>
+        </template>
+
+        <template if:true={metrics}>
+            <div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_medium slds-p-bottom_medium">
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-p-vertical_x-small">
+                    <div class="kpi-card kpi-primary">
+                        <div class="kpi-label">Today's Bookings</div>
+                        <div class="kpi-value">{todayLabel}</div>
+                        <div class="kpi-sub">Top model: {topModelLabel}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-p-vertical_x-small">
+                    <div class="kpi-card kpi-success">
+                        <div class="kpi-label">Show-Up Rate</div>
+                        <div class="kpi-value">{showUpRateLabel}</div>
+                        <div class="kpi-sub">Arrived / scheduled</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-p-vertical_x-small">
+                    <div class="kpi-card kpi-accent">
+                        <div class="kpi-label">Conversion Rate</div>
+                        <div class="kpi-value">{conversionRateLabel}</div>
+                        <div class="kpi-sub">Interested / completed</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-p-vertical_x-small">
+                    <div class="kpi-card kpi-warning">
+                        <div class="kpi-label">Hot Leads / Opps</div>
+                        <div class="kpi-value">{hotLeadsLabel}</div>
+                        <div class="kpi-sub">Next 7 days: {upcomingLabel}</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

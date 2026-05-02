@@ -1,0 +1,337 @@
+:host {
+    display: block;
+    color: #E6EAEE;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    background:
+        radial-gradient(circle at 12% -10%, rgba(0, 229, 197, 0.08), transparent 55%),
+        radial-gradient(circle at 92% 110%, rgba(124, 58, 237, 0.06), transparent 55%),
+        linear-gradient(180deg, #0A0D10 0%, #12161A 100%);
+    min-height: 100%;
+}
+
+.wa { padding: 28px 32px 36px; max-width: 1500px; margin: 0 auto; }
+
+/* ============ Header ============ */
+
+.wa__head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 24px; margin-bottom: 22px;
+}
+.wa__heading { display: flex; flex-direction: column; gap: 6px; }
+
+.wa__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 11px; letter-spacing: 0.22em;
+    color: #00E5C5; text-transform: uppercase;
+}
+.wa__eyedot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #00E5C5; box-shadow: 0 0 8px rgba(0, 229, 197, 0.7);
+}
+
+.wa__title {
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 30px; font-weight: 700; letter-spacing: 0.04em;
+    color: #FFFFFF; margin: 2px 0 0 0;
+    text-transform: uppercase;
+}
+
+.wa__sub { margin: 4px 0 0 0; color: #95A0AA; font-size: 13px; }
+.wa__sub strong { color: #DDE3E8; font-weight: 600; }
+.wa__warn { color: #FFB1C5; }
+
+.btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif; font-size: 13px; font-weight: 600;
+    padding: 9px 14px; border-radius: 10px;
+    transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+.btn--ghost {
+    background: rgba(255,255,255,0.04); color: #E6EAEE;
+    border: 1px solid rgba(255,255,255,0.10);
+}
+.btn--ghost:hover {
+    background: rgba(0, 229, 197, 0.10); color: #00E5C5;
+    border-color: rgba(0, 229, 197, 0.35);
+}
+
+.alert { border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; }
+.alert--error {
+    background: rgba(255, 111, 145, 0.08);
+    border: 1px solid rgba(255, 111, 145, 0.30);
+    color: #FFC0CF;
+}
+
+/* ============ Three-pane grid ============ */
+
+.wa__grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) minmax(320px, 420px);
+    gap: 32px;
+    align-items: stretch;
+    justify-content: center;
+}
+
+/* ============ Phone frame ============ */
+
+.phone {
+    position: relative;
+    background: #0B141A;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+        0 18px 50px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    height: 720px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+}
+
+.phone__notch {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 22px; border-radius: 16px;
+    background: #000; z-index: 2;
+}
+
+.phone__statusbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 22px 6px;
+    font-size: 11px; color: #B8C0C7;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif; letter-spacing: 0.10em;
+    text-transform: uppercase;
+}
+
+.phone__statusbar--biz { color: #BFEAD8; }
+
+/* Customer chat header (WhatsApp dark) */
+.chat__header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: #1F2C33;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.chat__header--biz {
+    background: #008069; /* WhatsApp Business green */
+    color: #FFFFFF;
+}
+
+.chat__who { display: flex; flex-direction: column; line-height: 1.2; }
+
+.chat__name {
+    font-weight: 600; font-size: 14px; color: #FFFFFF;
+}
+
+.chat__sub {
+    font-size: 11.5px; color: #93A1AA;
+}
+
+.chat__header--biz .chat__sub { color: rgba(255,255,255,0.78); }
+
+.avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    color: #061218;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 0 12px rgba(0, 229, 197, 0.20);
+}
+
+.avatar--biz {
+    background: linear-gradient(135deg, #00E5C5 0%, #38D89B 100%);
+}
+
+.avatar--cust {
+    background: linear-gradient(135deg, #FFD166 0%, #FFA94D 100%);
+}
+
+/* ============ Bubbles ============ */
+
+.bubbles {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    background:
+        radial-gradient(rgba(0, 229, 197, 0.04) 1px, transparent 1px) 0 0/16px 16px,
+        #0B141A;
+    padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 6px;
+}
+
+.bubbles--biz {
+    background:
+        radial-gradient(rgba(0, 128, 105, 0.07) 1px, transparent 1px) 0 0/16px 16px,
+        #ECE5DD; /* WhatsApp light wallpaper for biz */
+}
+
+.bubble {
+    max-width: 78%;
+    padding: 7px 10px 6px;
+    border-radius: 8px;
+    position: relative;
+    line-height: 1.35;
+    font-size: 13.5px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+}
+
+.bubble__text { margin: 0; white-space: pre-wrap; }
+
+.bubble__ts {
+    display: inline-block; margin-left: 6px;
+    font-size: 10.5px; color: rgba(255,255,255,0.55);
+    float: right; transform: translateY(2px);
+}
+
+/* Customer phone bubbles */
+.bubbles .bubble--in {
+    align-self: flex-start;
+    background: #202C33;
+    color: #E9EDEF;
+    border-top-left-radius: 2px;
+}
+.bubbles .bubble--out {
+    align-self: flex-end;
+    background: #005C4B;
+    color: #E9EDEF;
+    border-top-right-radius: 2px;
+}
+
+.bubble--system {
+    align-self: center !important;
+    background: rgba(0, 0, 0, 0.45) !important;
+    color: #BBC8D0 !important;
+    font-size: 12px; padding: 6px 12px;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+.bubble--system .bubble__text { font-size: 12px; }
+
+/* Business inbox bubbles (WhatsApp light theme) */
+.bubbles--biz .bubble--biz-in {
+    align-self: flex-start;
+    background: #FFFFFF;
+    color: #111B21;
+    border-top-left-radius: 2px;
+}
+.bubbles--biz .bubble--biz-out {
+    align-self: flex-end;
+    background: #D9FDD3;
+    color: #111B21;
+    border-top-right-radius: 2px;
+}
+.bubbles--biz .bubble__ts { color: rgba(0,0,0,0.45); }
+
+.badge {
+    display: inline-block;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 1px 7px; border-radius: 999px; margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.badge--ai {
+    background: linear-gradient(90deg, #00E5C5 0%, #38D89B 100%);
+    color: #061218;
+}
+
+/* Typing indicator */
+.bubble--typing {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 10px 14px;
+    background: #202C33 !important;
+}
+.bubble--typing span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.55);
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+.bubble--typing span:nth-child(2) { animation-delay: 0.15s; }
+.bubble--typing span:nth-child(3) { animation-delay: 0.30s; }
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.55; }
+    30%           { transform: translateY(-3px); opacity: 1; }
+}
+
+/* ============ Quick replies + composer ============ */
+
+.chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px 0;
+    background: #0B141A;
+}
+
+.chip {
+    appearance: none; cursor: pointer;
+    padding: 6px 10px;
+    background: rgba(0, 229, 197, 0.10);
+    color: #00E5C5;
+    border: 1px solid rgba(0, 229, 197, 0.32);
+    border-radius: 999px;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 11.5px; letter-spacing: 0.06em; font-weight: 600;
+    transition: background 140ms ease, color 140ms ease, transform 100ms ease;
+}
+.chip:hover { background: rgba(0, 229, 197, 0.20); transform: translateY(-1px); }
+
+.composer {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px 14px;
+    background: #0B141A;
+}
+
+.composer__input {
+    flex: 1; min-width: 0;
+    background: #2A3942; color: #E9EDEF;
+    border: none; outline: none;
+    border-radius: 22px;
+    padding: 9px 14px;
+    font-family: inherit; font-size: 13.5px;
+}
+.composer__input::placeholder { color: #8696A0; }
+
+.composer__send {
+    appearance: none; cursor: pointer;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #00E5C5 0%, #38D89B 100%);
+    color: #061218; border: none;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(0, 229, 197, 0.32);
+    transition: transform 120ms ease;
+}
+.composer__send:hover { transform: scale(1.05); }
+
+/* ============ Business footer ============ */
+
+.biz__footer {
+    background: #008069;
+    padding: 9px 12px;
+    text-align: center;
+}
+
+.biz__autoreply {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Segoe UI", "Helvetica Neue", Helvetica, "Lucida Grande", Arial, Ubuntu, Cantarell, "Fira Sans", sans-serif;
+    font-size: 10.5px; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.92); text-transform: uppercase;
+    font-weight: 600;
+}
+.biz__dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #ffd166;
+    box-shadow: 0 0 8px rgba(255, 209, 102, 0.7);
+    animation: pulseDot 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.85); }
+}
+
+/* ============ Responsive ============ */
+
+@media (max-width: 880px) {
+    .wa__grid { grid-template-columns: 1fr; gap: 18px; }
+    .phone { max-width: 420px; margin: 0 auto; height: 640px; }
+}

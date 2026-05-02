@@ -1,0 +1,433 @@
+:host {
+    --electra-primary: #1B4D3E;
+    --electra-accent: #00D4AA;
+    --electra-dark: #0A0A0A;
+    --electra-white: #FFFFFF;
+    --electra-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --electra-display: 'Aeromove', 'Inter', 'Segoe UI', sans-serif;
+    --electra-logo: 'Konexy', 'Playfair Display', Georgia, serif;
+    --electra-accent-font: 'Aeromove', 'Inter', sans-serif;
+
+    display: block;
+    font-family: var(--electra-font);
+    background: linear-gradient(180deg, #0A0A0A 0%, #050505 100%);
+    color: var(--electra-white);
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: 80vh;
+    min-height: 480px;
+    overflow: hidden;
+    background: var(--electra-dark);
+    border-radius: 18px;
+    outline: none;
+    box-shadow: 0 20px 60px rgba(10, 10, 10, 0.25);
+}
+
+.track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.9s ease, transform 6s ease;
+    pointer-events: none;
+}
+
+.slide--active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 65%;
+    display: block;
+}
+
+.scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(100deg,
+            rgba(10, 10, 10, 0.78) 0%,
+            rgba(10, 10, 10, 0.45) 45%,
+            rgba(10, 10, 10, 0.10) 70%,
+            rgba(10, 10, 10, 0.00) 100%),
+        linear-gradient(to top,
+            rgba(10, 10, 10, 0.55) 0%,
+            rgba(10, 10, 10, 0.00) 55%);
+    pointer-events: none;
+}
+
+.counter {
+    position: absolute;
+    top: 5.5rem;
+    left: 1.75rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    font-variant-numeric: tabular-nums;
+    z-index: 3;
+}
+
+.counter::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--electra-accent);
+    vertical-align: middle;
+    margin-right: 0.75rem;
+    transform: translateY(-2px);
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 3rem 3rem 3rem;
+    color: var(--electra-white);
+    margin: 0;
+    z-index: 2;
+}
+
+.caption__inner {
+    max-width: 620px;
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.slide--active .caption__inner {
+    animation: rise 0.9s 0.15s ease forwards;
+}
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--electra-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.eyebrow__dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--electra-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.18);
+}
+
+.title {
+    font-family: var(--electra-display);
+    font-size: clamp(2.5rem, 5.5vw, 4.75rem);
+    line-height: 0.98;
+    margin: 0 0 1.1rem;
+    color: var(--electra-white);
+    text-shadow: 0 2px 26px rgba(0, 0, 0, 0.45);
+}
+
+/* SUV + Crossover use --dirt: Rubik Distressed / Rubik Dirt only */
+.title--dirt {
+    font-family: 'Rubik Distressed', 'Rubik Dirt', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+    line-height: 0.95;
+    color: var(--electra-white);
+    text-shadow: 0 2px 22px rgba(0, 0, 0, 0.6);
+}
+
+.title--speed {
+    font-family: 'Impact', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transform: skewX(-6deg);
+    text-shadow:
+        0 2px 18px rgba(0, 0, 0, 0.55),
+        0 0 32px rgba(0, 212, 170, 0.2);
+    background: linear-gradient(180deg, #FFFFFF 0%, #C5F4E6 70%, rgba(0, 212, 170, 0.7) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Brand line (small product line in Aeromove) ---------- */
+
+.brand-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--electra-accent);
+    text-shadow: 0 0 16px rgba(0, 212, 170, 0.35);
+}
+
+/* SUV + Crossover brand line: mirrors .title--dirt */
+.brand-line--dirt {
+    font-family: 'Rubik Distressed', 'Rubik Dirt', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--electra-white);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* GT + Sedan brand line: mirrors .title--speed */
+.brand-line--speed {
+    font-family: 'Impact', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transform: skewX(-6deg);
+    background: linear-gradient(180deg, #FFFFFF 0%, #C5F4E6 70%, rgba(0, 212, 170, 0.9) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 18px rgba(0, 212, 170, 0.25);
+}
+
+.brand-line__dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--electra-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.18);
+}
+
+.tagline {
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    font-weight: 300;
+    line-height: 1.45;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 520px;
+    font-style: italic;
+}
+
+/* ---------- Top nav bar ---------- */
+
+.top-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.70) 0%, rgba(10, 10, 10, 0) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--electra-white);
+    flex-shrink: 0;
+    min-width: 140px;
+}
+
+.brand__mark {
+    color: var(--electra-accent);
+    font-size: 1.25rem;
+    line-height: 1;
+    text-shadow: 0 0 12px rgba(0, 212, 170, 0.5);
+}
+
+.brand__name {
+    font-family: var(--electra-logo);
+    font-size: 1.85rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+    color: var(--electra-white);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.brand__ev {
+    color: var(--electra-accent);
+    font-family: var(--electra-logo);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 16px rgba(0, 212, 170, 0.55);
+}
+
+.tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.tab:hover {
+    color: var(--electra-white);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tab--active {
+    color: var(--electra-dark);
+    background: var(--electra-accent);
+    box-shadow: 0 4px 14px rgba(0, 212, 170, 0.35);
+}
+
+.nav-spacer {
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+/* ---------- Dealer Login auth tab (extreme right of hero nav) ---------- */
+
+.auth-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem 0.5rem 0.9rem;
+    border: 1px solid rgba(0, 212, 170, 0.35);
+    border-radius: 999px;
+    color: var(--electra-white);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: rgba(0, 212, 170, 0.06);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.auth-tab:hover {
+    background: rgba(0, 212, 170, 0.14);
+    border-color: var(--electra-accent);
+    color: var(--electra-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 212, 170, 0.25);
+}
+
+.auth-tab--active {
+    background: var(--electra-accent);
+    color: var(--electra-dark);
+    border-color: var(--electra-accent);
+    box-shadow: 0 4px 14px rgba(0, 212, 170, 0.38);
+}
+
+.auth-tab__icon {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+}
+
+.dots {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 3;
+}
+
+.dot {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.32);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, width 0.3s ease;
+}
+
+.dot--active {
+    background: var(--electra-accent);
+    width: 42px;
+}
+
+.carousel:focus-visible {
+    box-shadow: 0 0 0 3px var(--electra-accent), 0 20px 60px rgba(10, 10, 10, 0.25);
+}
+
+@media (max-width: 900px) {
+    .caption { padding: 2rem 1.75rem 2.5rem; }
+    .spec { margin-bottom: 1.25rem; }
+}
+
+@media (max-width: 640px) {
+    .carousel { aspect-ratio: 4 / 5; border-radius: 14px; }
+    .caption { padding: 1.5rem 1.25rem 2rem; }
+    .counter { top: 4.25rem; left: 1.25rem; font-size: 0.72rem; }
+    .counter::before { width: 18px; margin-right: 0.5rem; }
+    .eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; margin-bottom: 0.75rem; }
+    .tagline { font-size: 1rem; }
+    .dots { right: 1.25rem; bottom: 1rem; }
+    .dot { width: 20px; }
+    .dot--active { width: 32px; }
+
+    .top-nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+    .brand { min-width: 0; }
+    .brand__name { display: none; }
+    .nav-spacer { display: none; }
+    .tabs { justify-content: flex-start; }
+    .tab { font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.45rem 0.75rem; }
+    .auth-tab__label { display: none; }
+    .auth-tab { padding: 0.45rem 0.55rem; }
+}

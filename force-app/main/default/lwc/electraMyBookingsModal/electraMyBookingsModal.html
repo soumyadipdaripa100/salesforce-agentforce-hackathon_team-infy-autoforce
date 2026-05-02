@@ -1,0 +1,184 @@
+<template>
+    <template lwc:if={isOpen}>
+        <div class="scrim" onclick={handleScrimClick}>
+            <div class="modal"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="mb-modal-title"
+                 tabindex="-1"
+                 onkeydown={handleDialogKeydown}>
+
+                <header class="modal__head">
+                    <div class="modal__heading">
+                        <span class="modal__eyebrow">
+                            <span class="modal__eyedot"></span>
+                            MY BOOKINGS
+                        </span>
+                        <h2 id="mb-modal-title" class="modal__title">
+                            <template lwc:if={isLookupStep}>Find my test drives</template>
+                            <template lwc:elseif={isResultsStep}>Your test drives</template>
+                        </h2>
+                    </div>
+                    <button type="button"
+                            class="modal__close"
+                            aria-label="Close"
+                            onclick={handleClose}>&times;</button>
+                </header>
+
+                <!-- ===== Step: Lookup ===== -->
+                <template lwc:if={isLookupStep}>
+                    <section class="body">
+                        <p class="step-hint">
+                            Enter the email and mobile you used when booking. We&rsquo;ll pull up all your scheduled,
+                            confirmed, and past test drives.
+                        </p>
+
+                        <div class="grid-2">
+                            <lightning-input type="email"
+                                             label="Email"
+                                             value={email}
+                                             onchange={handleEmailInput}
+                                             required
+                                             class="dark-input">
+                            </lightning-input>
+                            <lightning-input type="tel"
+                                             label="Mobile number"
+                                             value={mobile}
+                                             onchange={handleMobileInput}
+                                             pattern="[0-9]{10,12}"
+                                             required
+                                             class="dark-input">
+                            </lightning-input>
+                        </div>
+
+                        <template lwc:if={errorMessage}>
+                            <div class="alert alert--error">{errorMessage}</div>
+                        </template>
+                    </section>
+
+                    <footer class="modal__foot">
+                        <span class="foot-spacer"></span>
+                        <button type="button"
+                                class="btn btn--primary"
+                                onclick={handleSearch}
+                                disabled={submitting}>
+                            <template lwc:if={submitting}>Searching&hellip;</template>
+                            <template lwc:else>Find my bookings</template>
+                        </button>
+                    </footer>
+                </template>
+
+                <!-- ===== Step: Results ===== -->
+                <template lwc:if={isResultsStep}>
+                    <section class="body">
+                        <template lwc:if={flashMessage}>
+                            <div class="alert alert--ok">{flashMessage}</div>
+                        </template>
+                        <template lwc:if={errorMessage}>
+                            <div class="alert alert--error">{errorMessage}</div>
+                        </template>
+
+                        <template lwc:if={hasNoBookings}>
+                            <div class="empty">
+                                <p>No bookings found for <strong>{email}</strong>.</p>
+                                <p class="empty__hint">Double-check the email and mobile, or book your first Electra drive.</p>
+                            </div>
+                        </template>
+
+                        <template lwc:if={hasBookings}>
+                            <ul class="bookings" role="list">
+                                <template for:each={displayBookings} for:item="b">
+                                    <li key={b.id} class="booking">
+                                        <div class="booking__head">
+                                            <div class="booking__title">
+                                                <h3 class="booking__vehicle">{b.vehicle}</h3>
+                                                <p class="booking__ref">
+                                                    <span class="booking__refnum">{b.name}</span>
+                                                    <template lwc:if={b.driveType}>
+                                                        <span class="booking__sep">&middot;</span>
+                                                        <span>{b.driveType}</span>
+                                                    </template>
+                                                </p>
+                                            </div>
+                                            <span class={b.pillClass}>{b.status}</span>
+                                        </div>
+
+                                        <p class="booking__when">{b.whenLabel}</p>
+                                        <template lwc:if={b.dealerLine}>
+                                            <p class="booking__dealer">{b.dealerLine}</p>
+                                        </template>
+
+                                        <template lwc:if={b.isRescheduling}>
+                                            <div class="reschedule">
+                                                <lightning-input
+                                                    type="datetime"
+                                                    label="New date & time"
+                                                    value={rescheduleDateTime}
+                                                    onchange={handleRescheduleInput}
+                                                    required
+                                                    class="dark-input">
+                                                </lightning-input>
+                                                <div class="reschedule__actions">
+                                                    <button type="button"
+                                                            class="btn btn--ghost"
+                                                            onclick={handleRescheduleCancel}
+                                                            disabled={b.isBusy}>
+                                                        Cancel
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn--primary"
+                                                            data-id={b.id}
+                                                            onclick={handleRescheduleSave}
+                                                            disabled={b.isBusy}>
+                                                        <template lwc:if={b.isBusy}>Saving&hellip;</template>
+                                                        <template lwc:else>Save new time</template>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
+
+                                        <template lwc:if={b.canAct}>
+                                            <template lwc:if={b.isRescheduling}></template>
+                                            <template lwc:else>
+                                                <div class="booking__actions">
+                                                    <button type="button"
+                                                            class="btn btn--primary"
+                                                            data-id={b.id}
+                                                            onclick={handleOpenReschedule}
+                                                            disabled={b.isBusy}>
+                                                        Reschedule
+                                                    </button>
+                                                    <button type="button"
+                                                            class="btn btn--danger"
+                                                            data-id={b.id}
+                                                            onclick={handleCancel}
+                                                            disabled={b.isBusy}>
+                                                        <template lwc:if={b.isBusy}>Cancelling&hellip;</template>
+                                                        <template lwc:else>Cancel</template>
+                                                    </button>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                    </section>
+
+                    <footer class="modal__foot">
+                        <button type="button"
+                                class="btn btn--ghost"
+                                onclick={handleBackToLookup}>
+                            &larr; Look up another
+                        </button>
+                        <button type="button"
+                                class="btn btn--primary"
+                                onclick={handleClose}>
+                            Done
+                        </button>
+                    </footer>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

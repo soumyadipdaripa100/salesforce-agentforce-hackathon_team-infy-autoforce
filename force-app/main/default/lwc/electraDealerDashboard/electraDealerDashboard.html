@@ -1,0 +1,133 @@
+<template>
+    <section class="dash">
+
+        <!-- ============ Friendly card when the user isn't linked to a dealership ============ -->
+        <template lwc:if={noDealerLink}>
+            <div class="no-dealer">
+                <div class="no-dealer__icon" aria-hidden="true">&#9888;</div>
+                <h2 class="no-dealer__title">Dealership not linked</h2>
+                <p class="no-dealer__msg">{contextError}</p>
+                <p class="no-dealer__hint">
+                    Your portal user needs a Contact attached to a dealer Account before this dashboard can show your bookings.
+                </p>
+            </div>
+        </template>
+
+        <!-- ============ Normal dashboard ============ -->
+        <template lwc:if={hasContext}>
+            <header class="dash__head">
+                <div class="dash__heading">
+                    <span class="dash__eyebrow">
+                        <span class="dash__eyedot"></span>
+                        DEALER CONSOLE
+                    </span>
+                    <h1 class="dash__title">{pageTitle}</h1>
+                    <p class="dash__sub">
+                        <strong>{dealerBadgeName}</strong>
+                        <template lwc:if={dealerBadgeCity}>
+                            <span class="dash__sep">&middot;</span>
+                            {dealerBadgeCity}
+                        </template>
+                    </p>
+                </div>
+                <div class="dash__actions">
+                    <button type="button" class="btn btn--ghost" onclick={handleRefresh}>
+                        &#x21bb; Refresh
+                    </button>
+                </div>
+            </header>
+
+            <nav class="ttabs" aria-label="Dashboard sections">
+                <template for:each={tabs} for:item="t">
+                    <button key={t.id}
+                            type="button"
+                            class={t.className}
+                            data-id={t.id}
+                            onclick={handleTabClick}>
+                        {t.label}
+                        <span class="ttab__count">{t.count}</span>
+                    </button>
+                </template>
+            </nav>
+
+            <template lwc:if={lastError}>
+                <div class="alert alert--error">{lastError}</div>
+            </template>
+
+            <template lwc:if={hasBookings}>
+                <ul class="bookings" role="list">
+                    <template for:each={bookings} for:item="b">
+                        <li key={b.id} class="booking">
+                            <div class="booking__head">
+                                <div class="booking__title">
+                                    <h2 class="booking__name">{b.customer}</h2>
+                                    <p class="booking__meta">
+                                        <span class="booking__ref">{b.name}</span>
+                                        <span class="booking__sep">&middot;</span>
+                                        <span>{b.vehicle}</span>
+                                        <span class="booking__sep">&middot;</span>
+                                        <span>{b.driveType}</span>
+                                    </p>
+                                    <p class="booking__when">{b.when}</p>
+                                </div>
+                                <span class={b.statusBadgeClass}>{b.status}</span>
+                            </div>
+
+                            <div class="path">
+                                <template for:each={b.pathSteps} for:item="s">
+                                    <div key={s.key} class={s.className}>
+                                        <span class="pstep__num">{s.number}</span>
+                                        <span class="pstep__label">{s.label}</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="booking__contact">
+                                <template lwc:if={b.email}>
+                                    <a href={b.email} class="chip">
+                                        <span class="chip__label">Email</span>
+                                        {b.email}
+                                    </a>
+                                </template>
+                                <template lwc:if={b.mobile}>
+                                    <span class="chip">
+                                        <span class="chip__label">Mobile</span>
+                                        {b.mobile}
+                                    </span>
+                                </template>
+                                <template lwc:if={b.channel}>
+                                    <span class="chip chip--muted">
+                                        <span class="chip__label">Channel</span>
+                                        {b.channel}
+                                    </span>
+                                </template>
+                            </div>
+
+                            <template lwc:if={b.hasActions}>
+                                <div class="booking__actions">
+                                    <template for:each={b.actions} for:item="a">
+                                        <button key={a.key}
+                                                type="button"
+                                                class={a.className}
+                                                data-id={a.recordId}
+                                                data-next={a.next}
+                                                disabled={b.isBusy}
+                                                onclick={handleStatusAction}>
+                                            {a.label}
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+
+            <template lwc:else>
+                <div class="empty">
+                    <p>{emptyMessage}</p>
+                </div>
+            </template>
+        </template>
+    </section>
+</template>

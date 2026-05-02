@@ -1,0 +1,46 @@
+<template>
+    <section class="detail">
+        <template lwc:if={loading}>
+            <div class="state">
+                <lightning-spinner alternative-text="Loading vehicle" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={loaded}>
+            <header class="hero">
+                <span class="badge">{body}</span>
+                <h1 class="hero__name">{name}</h1>
+                <p class="hero__desc">{description}</p>
+            </header>
+
+            <div class="specs-wrap">
+                <h2 class="specs-title">Specifications</h2>
+                <dl class="specs">
+                    <div class="spec"><dt>Body Type</dt><dd>{body}</dd></div>
+                    <div class="spec"><dt>Fuel Source</dt><dd>{fuel}</dd></div>
+                    <div class="spec"><dt>0-60 mph</dt><dd>{acceleration}</dd></div>
+                    <div class="spec"><dt>Range</dt><dd>{range}</dd></div>
+                    <div class="spec"><dt>Battery</dt><dd>{battery}</dd></div>
+                    <div class="spec"><dt>Top Speed</dt><dd>{topSpeed}</dd></div>
+                    <div class="spec"><dt>Power</dt><dd>{power}</dd></div>
+                    <div class="spec"><dt>Doors</dt><dd>{doors}</dd></div>
+                </dl>
+            </div>
+
+            <div class="cta">
+                <button class="btn btn--primary" onclick={handleBook}>
+                    Book a Test Drive
+                </button>
+                <button class="btn btn--secondary" onclick={handleExperience}>
+                    Try the Experience Drive
+                </button>
+            </div>
+        </template>
+
+        <template lwc:if={record.error}>
+            <div class="state state--error">
+                <p>Unable to load this vehicle. Please pick a model from the home page.</p>
+            </div>
+        </template>
+    </section>
+</template>

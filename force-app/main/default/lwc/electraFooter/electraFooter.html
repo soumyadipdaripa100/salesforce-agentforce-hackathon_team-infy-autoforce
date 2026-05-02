@@ -1,0 +1,88 @@
+<template>
+    <footer class="footer">
+        <div class="footer__wrap">
+
+            <div class="footer__top">
+                <div class="brand-col">
+                    <div class="brand">
+                        <span class="brand__mark">&#9830;</span>
+                        <span class="brand__name">ELECTRA<span class="brand__ev">EV</span></span>
+                    </div>
+                    <p class="brand__tagline">
+                        Drive the future.<br/>Quietly. Cleanly. <em>Electric.</em>
+                    </p>
+
+                    <form class="newsletter" onsubmit={handleSubscribe}>
+                        <label class="newsletter__label">Get launch updates &amp; exclusive previews</label>
+                        <div class="newsletter__row">
+                            <input type="email"
+                                   class="newsletter__input"
+                                   placeholder="you@example.com"
+                                   required
+                                   oninput={handleEmailInput} />
+                            <button type="submit" class={subscribeBtnClass}>
+                                {subscribeLabel}
+                            </button>
+                        </div>
+                        <p class="newsletter__fine">
+                            By subscribing you agree to our Privacy Policy.
+                        </p>
+                    </form>
+                </div>
+
+                <nav class="links-grid" aria-label="Footer">
+                    <template for:each={columns} for:item="col">
+                        <div key={col.key} class="col">
+                            <h4 class="col__title">{col.title}</h4>
+                            <ul class="col__list">
+                                <template for:each={col.items} for:item="item">
+                                    <li key={item.key}>
+                                        <a href="#"
+                                           class="col__link"
+                                           data-action={item.action}
+                                           onclick={handleLinkClick}>
+                                            {item.label}
+                                        </a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                </nav>
+            </div>
+
+            <div class="footer__divider"></div>
+
+            <div class="footer__bottom">
+                <div class="legal">
+                    <p class="legal__copy">&copy; {year} Electra Cars, Inc. All rights reserved.</p>
+                    <ul class="legal__links">
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <div class="social">
+                    <template for:each={socials} for:item="s">
+                        <a key={s.key}
+                           class="social__btn"
+                           href="#"
+                           aria-label={s.label}
+                           onclick={handleLinkClick}>
+                            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                                <path d={s.path} fill="currentColor"></path>
+                            </svg>
+                        </a>
+                    </template>
+                </div>
+
+                <div class="powered">
+                    <span class="powered__dot"></span>
+                    Powered by Salesforce
+                </div>
+            </div>
+        </div>
+    </footer>
+</template>

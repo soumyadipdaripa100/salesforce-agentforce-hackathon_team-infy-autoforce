@@ -1,0 +1,37 @@
+<template>
+    <header class="topnav">
+        <div class="topnav__wrap">
+            <a href="#" class="brand" onclick={handleBrandClick} aria-label="Electra EV home">
+                <span class="brand__mark">&#9830;</span>
+                <span class="brand__name">ELECTRA<span class="brand__ev">EV</span></span>
+            </a>
+
+            <nav class="nav" aria-label="Primary">
+                <ul class="tabs">
+                    <template for:each={tabs} for:item="t">
+                        <li key={t.id}>
+                            <a href="#"
+                               class={t.className}
+                               data-id={t.id}
+                               onclick={handleTabClick}>
+                                {t.label}
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </nav>
+
+            <a href="#"
+               class={authTab.className}
+               data-id={authTab.id}
+               onclick={handleTabClick}
+               aria-label="Dealer Login">
+                <svg class="auth-tab__icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-8 2-8 6v1h16v-1c0-4-4-6-8-6z"
+                          fill="currentColor"/>
+                </svg>
+                <span class="auth-tab__label">{authTab.label}</span>
+            </a>
+        </div>
+    </header>
+</template>

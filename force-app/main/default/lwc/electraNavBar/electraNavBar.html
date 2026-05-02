@@ -1,0 +1,28 @@
+<template>
+    <nav class="enav" aria-label="Primary">
+
+        <a class="enav__brand" href={managerUrl} aria-label="Electra EV home">
+            <template lwc:if={hasLogoImage}>
+                <img src={logoUrl} alt="Electra EV" class="enav__logoimg" />
+            </template>
+            <template lwc:else>
+                <span class="enav__mark" aria-hidden="true">&#9830;</span>
+                <span class="enav__name">ELECTRA<span class="enav__ev">EV</span></span>
+            </template>
+        </a>
+
+        <ul class="enav__items" role="list">
+            <template for:each={items} for:item="it">
+                <li key={it.key} class="enav__item">
+                    <a class={it.className}
+                       href={it.url}
+                       aria-current={it.ariaCurrent}>
+                        <span class="enav__linktext">{it.label}</span>
+                        <span class="enav__underline" aria-hidden="true"></span>
+                    </a>
+                </li>
+            </template>
+        </ul>
+
+    </nav>
+</template>

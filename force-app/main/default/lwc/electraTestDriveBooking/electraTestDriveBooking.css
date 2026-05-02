@@ -1,0 +1,695 @@
+:host {
+    --electra-primary: #1B4D3E;
+    --electra-accent: #00D4AA;
+    --electra-dark: #0A0A0A;
+    --electra-deep: #050505;
+    --electra-white: #FFFFFF;
+    --surface: #12161A;
+    --surface-soft: #0B0E11;
+    --surface-line: rgba(255, 255, 255, 0.08);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.72);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --electra-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --electra-display: 'Aeromove', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+
+    font-family: var(--electra-font);
+    color: var(--text-primary);
+}
+
+/* ---------- Scrim + shell ---------- */
+
+.scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2vh 1.25rem;
+    overflow-y: auto;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.modal {
+    position: relative;
+    width: min(720px, 100%);
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #12161A 0%, #0B0E11 100%);
+    border: 1px solid var(--surface-line);
+    border-radius: 18px;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 40px 80px -30px rgba(0, 212, 170, 0.25),
+        0 50px 120px -40px rgba(0, 0, 0, 0.7);
+    animation: rise 0.3s ease;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Header ---------- */
+
+.modal__head {
+    padding: 1.25rem 1.5rem 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--surface-line);
+}
+
+.modal__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.modal__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--electra-accent);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+
+.modal__eyedot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--electra-accent);
+    box-shadow: 0 0 10px rgba(0, 212, 170, 0.7);
+}
+
+.modal__title {
+    font-family: var(--electra-display);
+    font-size: 1.65rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.modal__close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--surface-line);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    font-family: inherit;
+}
+
+.modal__close:hover {
+    background: rgba(0, 212, 170, 0.12);
+    border-color: rgba(0, 212, 170, 0.35);
+    color: var(--electra-accent);
+}
+
+/* ---------- Stepper ---------- */
+
+.stepper {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.stp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.stp i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--surface-line);
+    font-style: normal;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.stp--active {
+    color: var(--electra-accent);
+}
+
+.stp--active i {
+    background: rgba(0, 212, 170, 0.15);
+    border-color: var(--electra-accent);
+    color: var(--electra-accent);
+}
+
+.stp--done {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.stp--done i {
+    background: var(--electra-accent);
+    border-color: var(--electra-accent);
+    color: var(--electra-dark);
+}
+
+/* ---------- Body ---------- */
+
+.body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    overflow: visible;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.body--success {
+    padding: 2.5rem 1.5rem;
+}
+
+.step-hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.section__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ---------- Step 1: model cards ---------- */
+
+.models {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.85rem;
+}
+
+.model-card {
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    background: var(--surface);
+    border: 1.5px solid var(--surface-line);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    font-family: inherit;
+}
+
+.model-card:hover {
+    border-color: rgba(0, 212, 170, 0.4);
+    transform: translateY(-2px);
+}
+
+.model-card--active {
+    border-color: var(--electra-accent);
+    box-shadow: 0 10px 28px -14px rgba(0, 212, 170, 0.45);
+}
+
+.model-card__img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+
+.model-card__body {
+    padding: 0.75rem 0.9rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.model-card__name {
+    font-family: var(--electra-display);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+}
+
+.model-card__body-type {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--electra-accent);
+}
+
+.model-card__specs {
+    display: flex;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.model-card__price {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 0.35rem;
+    letter-spacing: -0.005em;
+}
+
+/* ---------- Step 2: drive type cards ---------- */
+
+.dt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.55rem;
+}
+
+.dt-card {
+    padding: 0.75rem 0.9rem 0.85rem;
+    background: var(--surface);
+    border: 1.5px solid var(--surface-line);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    text-align: left;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    color: inherit;
+    font-family: inherit;
+}
+
+.dt-card:hover {
+    border-color: rgba(0, 212, 170, 0.35);
+    background: rgba(0, 212, 170, 0.04);
+}
+
+.dt-card--active {
+    border-color: var(--electra-accent);
+    background: rgba(0, 212, 170, 0.08);
+}
+
+.dt-card__title {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 0.92rem;
+}
+
+.dt-card__desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+/* ---------- Dealer chip ---------- */
+
+.dealer-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.85rem;
+    background: rgba(0, 212, 170, 0.06);
+    border: 1px solid rgba(0, 212, 170, 0.28);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    margin-top: 0.55rem;
+}
+
+.dealer-chip--locked {
+    background: rgba(0, 212, 170, 0.1);
+    border-color: rgba(0, 212, 170, 0.45);
+    margin-top: 0;
+}
+
+.dealer-chip--warn {
+    background: rgba(255, 180, 180, 0.06);
+    border-color: rgba(255, 120, 120, 0.35);
+    color: #FFB4B4;
+}
+
+.dealer-chip__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--electra-accent);
+    box-shadow: 0 0 10px rgba(0, 212, 170, 0.7);
+    flex: 0 0 auto;
+}
+
+.dealer-chip__name {
+    font-weight: 700;
+}
+
+.dealer-chip__city {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+}
+
+/* ---------- Step 3: form grid ---------- */
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+@media (max-width: 520px) {
+    .grid-2 { grid-template-columns: 1fr; }
+}
+
+.alert {
+    padding: 0.7rem 0.85rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.alert--error {
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    color: #FFB4B4;
+}
+
+/* ---------- Lightning input dark override ---------- */
+
+.dark-input {
+    --sds-c-input-color-background: #0B0E11;
+    --sds-c-input-color-border: rgba(255, 255, 255, 0.14);
+    --sds-c-input-color-border-focus: var(--electra-accent);
+    --sds-c-input-text-color: var(--text-primary);
+    --sds-c-input-radius-border: 10px;
+    --slds-c-textarea-color-background: #0B0E11;
+    --slds-c-textarea-color-border: rgba(255, 255, 255, 0.14);
+    --slds-c-textarea-color-border-focus: var(--electra-accent);
+    --slds-c-textarea-text-color: var(--text-primary);
+    --slds-c-textarea-radius-border: 10px;
+    --sds-c-label-text-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+/* ---------- Footer ---------- */
+
+.modal__foot {
+    padding: 0.9rem 1.5rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid var(--surface-line);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+.foot-spacer { width: 1px; }
+
+.btn {
+    font-family: inherit;
+    border: 0;
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn--primary {
+    background: var(--electra-accent);
+    color: var(--electra-dark);
+    box-shadow: 0 8px 22px rgba(0, 212, 170, 0.3);
+}
+
+.btn--primary:hover:not(:disabled) {
+    background: #00EFC0;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 212, 170, 0.4);
+}
+
+.btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1.5px solid var(--surface-line);
+}
+
+.btn--ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn--ghost:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ---------- Success ---------- */
+
+.success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+}
+
+.success__ring {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(0, 212, 170, 0.15);
+    border: 2px solid var(--electra-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0, 212, 170, 0.3);
+}
+
+.success__tick {
+    color: var(--electra-accent);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.success__title {
+    font-family: var(--electra-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.success__sub {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 420px;
+}
+
+/* =========================================================
+   Dealer step — showroom picker cards
+   ========================================================= */
+
+.dealers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.85rem;
+}
+
+.dealer-card {
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    background: var(--surface);
+    border: 1.5px solid var(--surface-line);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    font-family: inherit;
+}
+
+.dealer-card:hover {
+    border-color: rgba(0, 212, 170, 0.4);
+    transform: translateY(-2px);
+}
+
+.dealer-card--active {
+    border-color: var(--electra-accent);
+    box-shadow: 0 12px 28px -14px rgba(0, 212, 170, 0.5),
+                0 0 0 1px rgba(0, 212, 170, 0.4) inset;
+}
+
+.dealer-card__img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+
+.dealer-card__body {
+    padding: 0.8rem 0.95rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+
+.dealer-card__name {
+    font-family: var(--electra-display);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+}
+
+.dealer-card__city {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--electra-accent);
+}
+
+.dealer-card__addr {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    line-height: 1.35;
+}
+
+/* =========================================================
+   Slot chips (when step)
+   ========================================================= */
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.45rem;
+    margin-top: 0.2rem;
+}
+
+.slot-chip {
+    padding: 0.6rem 0.55rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid var(--surface-line);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.slot-chip:hover {
+    border-color: rgba(0, 212, 170, 0.45);
+    background: rgba(0, 212, 170, 0.06);
+    transform: translateY(-1px);
+}
+
+.slot-chip--active {
+    background: var(--electra-accent);
+    border-color: var(--electra-accent);
+    color: var(--electra-dark);
+    box-shadow: 0 6px 18px rgba(0, 212, 170, 0.32);
+}
+
+.slot-empty {
+    margin: 0.2rem 0 0;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px dashed var(--surface-line);
+    border-radius: 8px;
+}
+
+.slot-empty--warn {
+    color: #FFB4B4;
+    border-color: rgba(255, 120, 120, 0.35);
+    background: rgba(255, 180, 180, 0.05);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 560px) {
+    .modal {
+        border-radius: 14px;
+    }
+    .modal__head { padding: 1rem 1.15rem 0.75rem; }
+    .modal__title { font-size: 1.3rem; }
+    .stepper { padding: 0.85rem 1.15rem 0; gap: 0.6rem; flex-wrap: wrap; }
+    .stp { font-size: 0.62rem; letter-spacing: 0.14em; }
+    .body { padding: 1rem 1.15rem 1.25rem; }
+    .modal__foot { padding: 0.85rem 1.15rem 1.15rem; }
+    .dealers { grid-template-columns: 1fr; }
+    .dealer-card__img { height: 120px; }
+    .slot-grid { grid-template-columns: repeat(3, 1fr); }
+}

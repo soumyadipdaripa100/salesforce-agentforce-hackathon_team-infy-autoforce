@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <masterLabel>Electra Chat Invitation</masterLabel>
+    <description>Proactive invitation card that appears above the Embedded Messaging bubble after a delay and opens the chat when accepted.</description>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage">
+            <property name="delaySeconds"
+                      type="Integer"
+                      label="Show after (seconds)"
+                      default="6"
+                      min="0"
+                      max="180" />
+            <!-- Deprecated: heading removed from layout. Property kept so existing
+                 Experience Builder pages don't break on deploy. -->
+            <property name="headline"
+                      type="String"
+                      label="Headline (deprecated, ignored)"
+                      default="" />
+            <property name="message"
+                      type="String"
+                      label="Message"
+                      default="Want to book a Test Drive? Let us know!" />
+            <property name="acceptLabel"
+                      type="String"
+                      label="Accept button label"
+                      default="Begin" />
+            <property name="dismissLabel"
+                      type="String"
+                      label="Dismiss button label"
+                      default="Maybe later" />
+            <property name="respectDismissal"
+                      type="Boolean"
+                      label="Remember dismissal for this browser session"
+                      default="true" />
+            <property name="bottomOffsetPx"
+                      type="Integer"
+                      label="Distance above chat bubble (px)"
+                      default="96"
+                      min="0"
+                      max="500" />
+            <property name="rightOffsetPx"
+                      type="Integer"
+                      label="Distance from right edge (px)"
+                      default="24"
+                      min="0"
+                      max="500" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

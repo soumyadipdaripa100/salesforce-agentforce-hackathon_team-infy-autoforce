@@ -1,0 +1,70 @@
+<template>
+    <div class="carousel"
+         tabindex="0"
+         onmouseenter={handleMouseEnter}
+         onmouseleave={handleMouseLeave}
+         onkeydown={handleKeyDown}>
+
+        <nav class="top-nav">
+            <div class="brand">
+                <span class="brand__mark">&#9830;</span>
+                <span class="brand__name">ELECTRA<span class="brand__ev">EV</span></span>
+            </div>
+            <ul class="tabs">
+                <template for:each={tabs} for:item="t">
+                    <li key={t.id}>
+                        <a href="#"
+                           class={t.className}
+                           data-id={t.id}
+                           onclick={handleTabClick}>
+                            {t.label}
+                        </a>
+                    </li>
+                </template>
+            </ul>
+            <a href="#"
+               class={authTab.className}
+               data-id={authTab.id}
+               onclick={handleTabClick}
+               aria-label="Dealer Login">
+                <svg class="auth-tab__icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-8 2-8 6v1h16v-1c0-4-4-6-8-6z"
+                          fill="currentColor"/>
+                </svg>
+                <span class="auth-tab__label">{authTab.label}</span>
+            </a>
+        </nav>
+
+        <div class="track">
+            <template for:each={slides} for:item="s">
+                <figure key={s.key} class={s.className}>
+                    <img src={s.src} alt={s.title} class="img" loading="lazy" />
+                    <div class="scrim"></div>
+                    <template lwc:if={showCaptions}>
+                        <div class="counter">{s.counter}</div>
+                        <figcaption class="caption">
+                            <div class="caption__inner">
+                                <span class={s.brandLineClass}>
+                                    <span class="brand-line__dot"></span>
+                                    {s.brandLine}
+                                </span>
+                                <h2 class={s.titleClass}>{s.title}</h2>
+                                <p class="tagline">{s.tagline}</p>
+                            </div>
+                        </figcaption>
+                    </template>
+                </figure>
+            </template>
+        </div>
+
+        <div class="dots" role="tablist">
+            <template for:each={dots} for:item="d">
+                <button key={d.key}
+                        class={d.className}
+                        data-index={d.index}
+                        aria-label={d.label}
+                        onclick={handleDot}></button>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,200 @@
+<template>
+    <section class="showcase">
+        <header class="showcase__header">
+            <h2 class="showcase__title">Meet the <em>Electra</em> family</h2>
+            <p class="showcase__subtitle">Four all-electric vehicles. One uncompromising standard.</p>
+        </header>
+
+        <div class="carousel">
+            <button class="nav nav--prev" aria-label="Previous vehicle" onclick={handlePrev}>
+                &#10094;
+            </button>
+
+            <div class="track">
+                <template for:each={vehicles} for:item="v">
+                    <article key={v.Id}
+                             class="card"
+                             onmousemove={handleTilt}
+                             onmouseleave={handleTiltReset}>
+                        <div class="card__inner">
+                            <template lwc:if={v.imageUrl}>
+                                <div class="hero">
+                                    <img src={v.imageUrl}
+                                         alt={v.Name}
+                                         class="car-img"
+                                         loading="lazy" />
+                                    <div class="shine"></div>
+                                </div>
+                            </template>
+
+                            <div class="content">
+                                <template lwc:if={v.imageUrl}>
+                                    <span class="badge">{v.BodyType}</span>
+                                </template>
+                                <template lwc:else>
+                                    <div class="content__top">
+                                        <span class="badge">{v.BodyType}</span>
+                                        <h3 class="content__name">{v.Name}</h3>
+                                    </div>
+                                </template>
+
+                                <dl class="specs">
+                                    <div class="spec">
+                                        <dt>Range</dt>
+                                        <dd>{v.MaximumBatteryRange}</dd>
+                                    </div>
+                                    <div class="spec spec--accent">
+                                        <dt>0-60 mph</dt>
+                                        <dd>{v.AccelerationTime}</dd>
+                                    </div>
+                                    <div class="spec">
+                                        <dt>Power</dt>
+                                        <dd>{v.TotalPower}</dd>
+                                    </div>
+                                </dl>
+
+                                <div class="price-row">
+                                    <div>
+                                        <p class="price-label">Starting at</p>
+                                        <p class="price">{v.startingPrice}</p>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn--secondary" data-id={v.Id} onclick={handleExplore}>
+                                            Explore
+                                        </button>
+                                        <button class="btn btn--primary" data-model={v.Name} onclick={handleBook}>
+                                            Book Test Drive
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__ground-shadow"></div>
+                    </article>
+                </template>
+            </div>
+
+            <button class="nav nav--next" aria-label="Next vehicle" onclick={handleNext}>
+                &#10095;
+            </button>
+        </div>
+
+        <!-- ========== Explore modal ========== -->
+        <template lwc:if={exploreOpen}>
+            <template lwc:if={activeExploreModel}>
+                <div class="emodal-scrim" onclick={handleScrimClick} onkeydown={handleExploreKeydown}>
+                    <div class="emodal" role="dialog" aria-modal="true" tabindex="-1">
+                        <header class="emodal__head">
+                            <div class="emodal__heading">
+                                <span class="emodal__eyebrow">
+                                    <span class="emodal__eyedot"></span>
+                                    VEHICLE DETAIL &middot; {activeExploreModel.BodyType}
+                                </span>
+                                <h2 class="emodal__title">{activeExploreModel.Name}</h2>
+                            </div>
+                            <div class="emodal__head-right">
+                                <span class="emodal__price">
+                                    <span class="emodal__price-label">Starting at</span>
+                                    <span class="emodal__price-value">{activeExploreModel.startingPrice}</span>
+                                </span>
+                                <button type="button"
+                                        class="emodal__close"
+                                        aria-label="Close"
+                                        onclick={handleCloseExplore}>&times;</button>
+                            </div>
+                        </header>
+
+                        <div class="emodal__body">
+                            <!-- Left: image + chart stacked -->
+                            <div class="emodal__left">
+                                <figure class="emodal__image">
+                                    <template lwc:if={activeExploreModel.imageUrl}>
+                                        <img src={activeExploreModel.imageUrl}
+                                             alt={activeExploreModel.Name}
+                                             loading="lazy" />
+                                    </template>
+                                </figure>
+
+                                <template lwc:if={exploreChart}>
+                                    <section class="emodal__section emodal__section--chart">
+                                        <div class="emodal__chart-head">
+                                            <h3 class="emodal__section-title">Power &amp; Torque</h3>
+                                            <div class="emodal__legend">
+                                                <span class="emodal__legend-item emodal__legend-item--power">
+                                                    <span class="emodal__legend-dot"></span>
+                                                    {exploreChart.powerLabel}
+                                                </span>
+                                                <span class="emodal__legend-item emodal__legend-item--torque">
+                                                    <span class="emodal__legend-dot"></span>
+                                                    {exploreChart.torqueLabel}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="emodal__chart">
+                                            <svg viewBox="0 0 450 200" class="emodal__svg" preserveAspectRatio="none" aria-hidden="true">
+                                                <!-- grid -->
+                                                <line x1="40" y1="30"  x2="40"  y2="170" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+                                                <line x1="40" y1="170" x2="430" y2="170" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+                                                <line x1="40" y1="100" x2="430" y2="100" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 4"/>
+                                                <line x1="40" y1="60"  x2="430" y2="60"  stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 4"/>
+
+                                                <!-- torque fill -->
+                                                <path d={exploreChart.torqueFill} fill="rgba(255,255,255,0.06)"/>
+                                                <!-- power fill -->
+                                                <path d={exploreChart.powerFill} fill="rgba(0,212,170,0.12)"/>
+
+                                                <!-- torque line -->
+                                                <path d={exploreChart.torquePath}
+                                                      fill="none"
+                                                      stroke="#FFFFFF"
+                                                      stroke-width="2.5"
+                                                      stroke-linecap="round"/>
+                                                <!-- power line -->
+                                                <path d={exploreChart.powerPath}
+                                                      fill="none"
+                                                      stroke="#00D4AA"
+                                                      stroke-width="2.5"
+                                                      stroke-linecap="round"/>
+
+                                                <!-- axis labels -->
+                                                <text x="40"  y="188" font-size="10" fill="rgba(255,255,255,0.55)">0 mph</text>
+                                                <text x="430" y="188" font-size="10" fill="rgba(255,255,255,0.55)" text-anchor="end">Top speed</text>
+                                                <text x="32"  y="34"  font-size="10" fill="rgba(255,255,255,0.55)" text-anchor="end">max</text>
+                                                <text x="32"  y="173" font-size="10" fill="rgba(255,255,255,0.55)" text-anchor="end">0</text>
+                                            </svg>
+                                        </div>
+                                    </section>
+                                </template>
+                            </div>
+
+                            <!-- Right: specs + CTA -->
+                            <div class="emodal__info">
+                                <section class="emodal__section">
+                                    <h3 class="emodal__section-title">Specifications</h3>
+                                    <dl class="especs">
+                                        <template for:each={exploreSpecs} for:item="s">
+                                            <div key={s.key} class="espec">
+                                                <dt class="espec__label">{s.label}</dt>
+                                                <dd class={s.valueClass}>{s.value}</dd>
+                                            </div>
+                                        </template>
+                                    </dl>
+                                </section>
+
+                                <div class="emodal__cta">
+                                    <button type="button" class="btn btn--primary" onclick={handleBookFromExplore}>
+                                        Book Test Drive
+                                    </button>
+                                    <button type="button" class="btn btn--secondary" onclick={handleCloseExplore}>
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </section>
+</template>

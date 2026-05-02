@@ -1,0 +1,65 @@
+<template>
+    <section class="xp">
+        <header class="hero">
+            <h1 class="hero__title">Experience Drive</h1>
+            <p class="hero__tagline">The car comes to you.</p>
+            <p class="hero__desc">
+                Can't visit a dealership? We'll bring your dream Electra right to your doorstep.
+            </p>
+        </header>
+
+        <section class="steps">
+            <h2 class="section__title">How It Works</h2>
+            <div class="steps__grid">
+                <template for:each={steps} for:item="s">
+                    <div key={s.num} class="step">
+                        <div class="step__num">{s.num}</div>
+                        <h3 class="step__title">{s.title}</h3>
+                        <p class="step__desc">{s.desc}</p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <section class="faq">
+            <h2 class="section__title">FAQ</h2>
+            <template for:each={faqs} for:item="f">
+                <details key={f.key} class="faq__item">
+                    <summary class="faq__q">{f.q}</summary>
+                    <p class="faq__a">{f.a}</p>
+                </details>
+            </template>
+        </section>
+
+        <section class="compare">
+            <h2 class="section__title">Standard Drive vs Experience Drive</h2>
+            <div class="compare__wrap">
+                <table class="compare__table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Standard Drive</th>
+                            <th>Experience Drive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="r">
+                            <tr key={r.key}>
+                                <th scope="row">{r.feature}</th>
+                                <td>{r.standard}</td>
+                                <td>{r.experience}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="cta">
+            <button class="btn btn--primary" onclick={handleBook}>
+                Book Your Experience Drive
+            </button>
+            <p class="cta__call">Or call us at (415) 555-0100</p>
+        </section>
+    </section>
+</template>

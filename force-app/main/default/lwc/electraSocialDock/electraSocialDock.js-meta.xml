@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <masterLabel>Electra Social Dock</masterLabel>
+    <description>Three social channel icons docked at the right edge plus a WhatsApp chat modal powered by Agentforce.</description>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage">
+            <property name="whatsappPhone"
+                      type="String"
+                      label="WhatsApp phone (E.164, e.g. +919876543210) — used as fallback when no agent is configured"
+                      default="+919876543210" />
+            <property name="whatsappMessage"
+                      type="String"
+                      label="WhatsApp pre-filled message (fallback)"
+                      default="Hi! I'd like to book a test drive with Electra EV." />
+            <property name="instagramHandle"
+                      type="String"
+                      label="Instagram handle (without @)"
+                      default="electraev" />
+            <property name="facebookHandle"
+                      type="String"
+                      label="Facebook page handle"
+                      default="electraev" />
+            <property name="delaySeconds"
+                      type="Integer"
+                      label="Slide-in delay (seconds)"
+                      default="2"
+                      min="0"
+                      max="60" />
+            <property name="topOffsetVh"
+                      type="Integer"
+                      label="Vertical offset from top (vh, 50 = middle)"
+                      default="42"
+                      min="0"
+                      max="100" />
+            <property name="tooltipText"
+                      type="String"
+                      label="Tooltip beside WhatsApp icon"
+                      default="Express Booking using WhatsApp" />
+            <property name="agentApiName"
+                      type="String"
+                      label="Agentforce Agent API Name (powers the chat modal)"
+                      default="" />
+            <property name="customerName"
+                      type="String"
+                      label="Customer display name (modal header)"
+                      default="Electra EV" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

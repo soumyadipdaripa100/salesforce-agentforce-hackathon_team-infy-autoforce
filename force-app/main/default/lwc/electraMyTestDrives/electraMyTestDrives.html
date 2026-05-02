@@ -1,0 +1,92 @@
+<template>
+    <section class="portal">
+        <header class="portal__header">
+            <h1 class="portal__title">My Test Drives</h1>
+            <p class="portal__subtitle">Upcoming and past bookings</p>
+        </header>
+
+        <template lwc:if={isLoading}>
+            <div class="state">
+                <lightning-spinner alternative-text="Loading bookings" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={loadError}>
+            <div class="state state--error">
+                <p>We couldn't load your bookings right now. Please refresh the page.</p>
+            </div>
+        </template>
+
+        <template lwc:if={isEmpty}>
+            <div class="empty">
+                <div class="empty__icon">&#9889;</div>
+                <h2 class="empty__title">No test drives yet</h2>
+                <p class="empty__desc">Book your first ride and feel the future of driving.</p>
+                <button class="btn btn--primary" onclick={handleBookNew}>
+                    Book a Test Drive
+                </button>
+            </div>
+        </template>
+
+        <template lwc:if={hasDrives}>
+            <div class="cards">
+                <template for:each={drives} for:item="d">
+                    <article key={d.Id} class="card">
+                        <div class="card__head">
+                            <div class="card__model-wrap">
+                                <h2 class="card__model">{d.modelName}</h2>
+                                <template lwc:if={d.bodyType}>
+                                    <span class="body-badge">{d.bodyType}</span>
+                                </template>
+                            </div>
+                            <span class={d.statusClass}>{d.Status__c}</span>
+                        </div>
+
+                        <dl class="meta">
+                            <div class="meta__row">
+                                <dt>When</dt>
+                                <dd>
+                                    <lightning-formatted-date-time
+                                        value={d.Test_Drive_Date_Time__c}
+                                        year="numeric" month="short" day="2-digit"
+                                        hour="2-digit" minute="2-digit">
+                                    </lightning-formatted-date-time>
+                                </dd>
+                            </div>
+                            <div class="meta__row">
+                                <dt>Where</dt>
+                                <dd>
+                                    <div>{d.dealershipName}</div>
+                                    <div class="addr">{d.addressLine}</div>
+                                </dd>
+                            </div>
+                            <template lwc:if={d.Drive_Type__c}>
+                                <div class="meta__row">
+                                    <dt>Type</dt>
+                                    <dd>{d.Drive_Type__c}</dd>
+                                </div>
+                            </template>
+                            <template lwc:if={d.Booking_Channel__c}>
+                                <div class="meta__row">
+                                    <dt>Channel</dt>
+                                    <dd>{d.Booking_Channel__c}</dd>
+                                </div>
+                            </template>
+                        </dl>
+
+                        <template lwc:if={d.actionable}>
+                            <div class="actions">
+                                <button class="btn btn--secondary" data-name={d.Name} onclick={handleReschedule}>
+                                    Reschedule
+                                </button>
+                                <button class="btn btn--ghost" data-name={d.Name} onclick={handleCancel}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </template>
+                    </article>
+                </template>
+            </div>
+        </template>
+    </section>
+</template>

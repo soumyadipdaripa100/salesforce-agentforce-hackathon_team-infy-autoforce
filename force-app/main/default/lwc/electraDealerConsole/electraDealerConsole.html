@@ -1,0 +1,74 @@
+<template>
+    <lightning-card title="Dealer Console" icon-name="standard:service_appointment">
+        <lightning-button-icon
+            slot="actions"
+            icon-name="utility:refresh"
+            alternative-text="Refresh"
+            title="Refresh bookings"
+            onclick={handleManualRefresh}>
+        </lightning-button-icon>
+
+        <c-electra-dealer-metrics
+            dealer-account-id={effectiveDealerId}
+            days-back="7"
+            refresh-seconds="60">
+        </c-electra-dealer-metrics>
+
+        <template if:true={error}>
+            <div class="slds-p-around_medium slds-text-color_error">{error}</div>
+        </template>
+
+        <lightning-tabset
+            class="slds-p-horizontal_medium"
+            variant="scoped"
+            active-tab-value={activeTab}
+            onactive={handleTabChange}
+            onselect={handleTabChange}
+            onstatuschange={handleStatusChange}
+            oncaptureoutcome={handleCaptureOutcome}>
+
+            <lightning-tab label={todayLabel} value="today">
+                <template if:true={todayEmpty}>
+                    <div class="slds-p-around_medium slds-text-color_weak slds-text-align_center">
+                        No bookings scheduled for today.
+                    </div>
+                </template>
+                <template for:each={todayBookings} for:item="b">
+                    <c-electra-dealer-booking-card key={b.Id} booking={b}></c-electra-dealer-booking-card>
+                </template>
+            </lightning-tab>
+
+            <lightning-tab label={upcomingLabel} value="upcoming">
+                <template if:true={upcomingEmpty}>
+                    <div class="slds-p-around_medium slds-text-color_weak slds-text-align_center">
+                        No upcoming bookings in the next {upcomingDaysAhead} days.
+                    </div>
+                </template>
+                <template for:each={upcomingBookings} for:item="b">
+                    <c-electra-dealer-booking-card key={b.Id} booking={b}></c-electra-dealer-booking-card>
+                </template>
+            </lightning-tab>
+
+            <lightning-tab label={completedLabel} value="completed">
+                <template if:true={completedEmpty}>
+                    <div class="slds-p-around_medium slds-text-color_weak slds-text-align_center">
+                        No drives completed today yet.
+                    </div>
+                </template>
+                <template for:each={completedBookings} for:item="b">
+                    <c-electra-dealer-booking-card key={b.Id} booking={b}></c-electra-dealer-booking-card>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+
+        <template if:true={showOutcomeModal}>
+            <c-electra-dealer-outcome-modal
+                booking-id={modalBookingId}
+                customer-name={modalCustomerName}
+                vehicle-model={modalVehicleModel}
+                oncancel={handleModalCancel}
+                onsave={handleModalSave}>
+            </c-electra-dealer-outcome-modal>
+        </template>
+    </lightning-card>
+</template>

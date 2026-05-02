@@ -1,0 +1,25 @@
+<template>
+    <template lwc:if={visible}>
+        <div class={cardClass}
+             style={cardStyle}
+             role="dialog"
+             aria-live="polite"
+             aria-labelledby="ci-msg">
+            <button type="button"
+                    class="ci__close"
+                    aria-label="Dismiss invitation"
+                    onclick={handleDismiss}>&times;</button>
+            <div class="ci__body">
+                <span class="ci__avatar" aria-hidden="true">
+                    <span class="ci__bolt">&#9889;</span>
+                </span>
+                <p class="ci__message" id="ci-msg">{message}</p>
+            </div>
+            <div class="ci__actions">
+                <button type="button"
+                        class="ci__btn ci__btn--primary"
+                        onclick={handleAccept}>{acceptLabel}</button>
+            </div>
+        </div>
+    </template>
+</template>

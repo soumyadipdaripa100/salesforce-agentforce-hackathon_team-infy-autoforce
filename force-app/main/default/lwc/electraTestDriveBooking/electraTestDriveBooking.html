@@ -1,0 +1,232 @@
+<template>
+    <template lwc:if={isOpen}>
+        <div class="scrim" onclick={handleScrimClick}>
+            <div class="modal"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="td-modal-title"
+                 tabindex="-1"
+                 onkeydown={handleDialogKeydown}>
+
+                <header class="modal__head">
+                    <div class="modal__heading">
+                        <span class="modal__eyebrow">
+                            <span class="modal__eyedot"></span>
+                            BOOK A TEST DRIVE
+                        </span>
+                        <h2 id="td-modal-title" class="modal__title">{stepTitle}</h2>
+                    </div>
+                    <button type="button"
+                            class="modal__close"
+                            aria-label="Close"
+                            onclick={handleClose}>&times;</button>
+                </header>
+
+                <template lwc:if={isSuccess}>
+                    <section class="body body--success">
+                        <div class="success">
+                            <div class="success__ring">
+                                <span class="success__tick">&#10003;</span>
+                            </div>
+                            <h3 class="success__title">Your Electra is scheduled.</h3>
+                            <p class="success__sub">
+                                Confirmation reference <strong>{successRecord.name}</strong>.
+                                We'll send the details to <strong>{email}</strong> shortly.
+                            </p>
+                            <button type="button" class="btn btn--primary" onclick={handleDone}>
+                                Done
+                            </button>
+                        </div>
+                    </section>
+                </template>
+
+                <template lwc:elseif={isOpen}>
+                    <section class="body">
+
+                        <!-- ============ Step: Dealer (showroom picker) ============ -->
+                        <template lwc:if={isDealerStep}>
+                            <p class="step-hint">Choose the showroom you'd like to visit.</p>
+                            <ul class="dealers" role="list">
+                                <template for:each={dealerOptions} for:item="d">
+                                    <li key={d.id}>
+                                        <button type="button"
+                                                class={d.className}
+                                                data-id={d.id}
+                                                onclick={handleDealerPick}>
+                                            <template lwc:if={d.imageUrl}>
+                                                <img src={d.imageUrl} alt={d.name} class="dealer-card__img" loading="lazy" />
+                                            </template>
+                                            <div class="dealer-card__body">
+                                                <span class="dealer-card__name">{d.name}</span>
+                                                <span class="dealer-card__city">{d.city}, {d.state}</span>
+                                                <template lwc:if={d.address}>
+                                                    <span class="dealer-card__addr">{d.address}</span>
+                                                </template>
+                                            </div>
+                                        </button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                        <!-- ============ Step: Vehicle ============ -->
+                        <template lwc:elseif={isVehicleStep}>
+                            <p class="step-hint">Pick the Electra you'd like to drive.</p>
+                            <ul class="models" role="list">
+                                <template for:each={modelOptions} for:item="m">
+                                    <li key={m.id}>
+                                        <button type="button"
+                                                class={m.className}
+                                                data-id={m.id}
+                                                onclick={handleModelPick}>
+                                            <template lwc:if={m.imageUrl}>
+                                                <img src={m.imageUrl} alt={m.name} class="model-card__img" loading="lazy" />
+                                            </template>
+                                            <div class="model-card__body">
+                                                <span class="model-card__name">{m.name}</span>
+                                                <span class="model-card__body-type">{m.bodyType}</span>
+                                                <div class="model-card__specs">
+                                                    <span>{m.range}</span>
+                                                    <span>&middot;</span>
+                                                    <span>0&ndash;60 {m.accel}</span>
+                                                </div>
+                                                <span class="model-card__price">From {m.price}</span>
+                                            </div>
+                                        </button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                        <!-- ============ Step: When (date + slot + drive type) ============ -->
+                        <template lwc:elseif={isWhenStep}>
+                            <p class="step-hint">Pick a date, then a time slot at <strong>{effectiveDealerLabel}</strong>.</p>
+
+                            <div class="section">
+                                <label class="section__label">Drive type</label>
+                                <div class="dt-grid">
+                                    <template for:each={driveTypeOptions} for:item="d">
+                                        <button key={d.id}
+                                                type="button"
+                                                class={d.className}
+                                                data-value={d.value}
+                                                onclick={handleDriveTypePick}>
+                                            <span class="dt-card__title">{d.title}</span>
+                                            <span class="dt-card__desc">{d.desc}</span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <lightning-input
+                                    type="date"
+                                    label="Preferred date"
+                                    value={slotDate}
+                                    onchange={handleSlotDateChange}
+                                    required
+                                    class="dark-input">
+                                </lightning-input>
+                            </div>
+
+                            <div class="section">
+                                <label class="section__label">Available time slots</label>
+
+                                <template lwc:if={awaitingDateInput}>
+                                    <p class="slot-empty">Pick a date to see available slots.</p>
+                                </template>
+
+                                <template lwc:if={hasSlotsToShow}>
+                                    <div class="slot-grid">
+                                        <template for:each={slotChips} for:item="s">
+                                            <button key={s.key}
+                                                    type="button"
+                                                    class={s.className}
+                                                    data-time={s.time}
+                                                    onclick={handleSlotPick}>
+                                                {s.time}
+                                            </button>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <template lwc:if={hasNoSlots}>
+                                    <p class="slot-empty slot-empty--warn">
+                                        No open slots on this date at {effectiveDealerLabel}. Try another day.
+                                    </p>
+                                </template>
+
+                                <template lwc:if={slotsError}>
+                                    <p class="slot-empty slot-empty--warn">{slotsError}</p>
+                                </template>
+                            </div>
+                        </template>
+
+                        <!-- ============ Step: Contact ============ -->
+                        <template lwc:elseif={isContactStep}>
+                            <p class="step-hint">Last step &mdash; who should we confirm with?</p>
+
+                            <div class="grid-2">
+                                <lightning-input type="text"
+                                                 label="Full name"
+                                                 value={customerName}
+                                                 onchange={handleNameInput}
+                                                 required
+                                                 class="dark-input">
+                                </lightning-input>
+                                <lightning-input type="email"
+                                                 label="Email"
+                                                 value={email}
+                                                 onchange={handleEmailInput}
+                                                 required
+                                                 class="dark-input">
+                                </lightning-input>
+                                <lightning-input type="tel"
+                                                 label="Mobile number"
+                                                 value={mobile}
+                                                 onchange={handleMobileInput}
+                                                 pattern="[0-9]{10,12}"
+                                                 required
+                                                 class="dark-input">
+                                </lightning-input>
+                            </div>
+
+                            <lightning-textarea
+                                label="Anything we should know? (optional)"
+                                value={notes}
+                                onchange={handleNotesInput}
+                                max-length="500"
+                                class="dark-input">
+                            </lightning-textarea>
+
+                            <template lwc:if={submitError}>
+                                <div class="alert alert--error">{submitError}</div>
+                            </template>
+                        </template>
+                    </section>
+
+                    <footer class="modal__foot">
+                        <template lwc:if={showBack}>
+                            <button type="button"
+                                    class="btn btn--ghost"
+                                    onclick={handleBack}
+                                    disabled={disableBack}>
+                                &larr; Back
+                            </button>
+                        </template>
+                        <template lwc:else>
+                            <span class="foot-spacer"></span>
+                        </template>
+
+                        <button type="button"
+                                class="btn btn--primary"
+                                onclick={handleNext}
+                                disabled={disableNext}>
+                            {nextLabel}
+                        </button>
+                    </footer>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

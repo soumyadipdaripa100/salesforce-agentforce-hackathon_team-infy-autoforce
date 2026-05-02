@@ -1,0 +1,134 @@
+<template>
+    <section class="wa">
+
+        <header class="wa__head">
+            <div class="wa__heading">
+                <span class="wa__eyebrow">
+                    <span class="wa__eyedot"></span>
+                    LIVE AGENTFORCE DEMO
+                </span>
+                <h1 class="wa__title">{pageTitle}</h1>
+                <p class="wa__sub">
+                    <template lwc:if={hasAgentName}>
+                        <span>Agent: <strong>{agentApiName}</strong></span>
+                    </template>
+                    <template lwc:else>
+                        <span class="wa__warn">No agent configured — set the Agent API Name in App Builder.</span>
+                    </template>
+                </p>
+            </div>
+            <div class="wa__actions">
+                <button type="button" class="btn btn--ghost" onclick={handleReset}>
+                    &#x21bb; Reset conversation
+                </button>
+            </div>
+        </header>
+
+        <template lwc:if={lastError}>
+            <div class="alert alert--error">{lastError}</div>
+        </template>
+
+        <div class="wa__grid">
+
+            <!-- =========== Customer phone =========== -->
+            <div class="phone phone--customer" aria-label="Customer WhatsApp">
+                <div class="phone__notch"></div>
+                <div class="phone__statusbar">
+                    <span>9:41</span>
+                    <span>5G &nbsp; 100%</span>
+                </div>
+                <div class="chat__header chat__header--customer">
+                    <span class="avatar avatar--biz">EV</span>
+                    <div class="chat__who">
+                        <span class="chat__name">Electra EV</span>
+                        <span class="chat__sub">online</span>
+                    </div>
+                </div>
+                <div class="bubbles">
+                    <template lwc:if={hasMessages}>
+                        <template for:each={customerBubbles} for:item="m">
+                            <div key={m.id} class={m.bubbleClass}>
+                                <p class="bubble__text">{m.text}</p>
+                                <span class="bubble__ts">{m.ts}</span>
+                            </div>
+                        </template>
+                    </template>
+                    <template lwc:else>
+                        <div class="bubble bubble--in bubble--system">
+                            <p class="bubble__text">
+                                Hi! I'm the Electra EV assistant. Tap a quick reply or type a message to start.
+                            </p>
+                        </div>
+                    </template>
+                    <template lwc:if={isThinking}>
+                        <div class="bubble bubble--in bubble--typing">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </template>
+                </div>
+                <div class="chips">
+                    <template for:each={quickReplies} for:item="q">
+                        <button key={q}
+                                type="button"
+                                data-text={q}
+                                class="chip"
+                                onclick={handleQuickReply}>{q}</button>
+                    </template>
+                </div>
+                <div class="composer">
+                    <input type="text"
+                           class="composer__input"
+                           placeholder="Type a message..."
+                           value={inputValue}
+                           oninput={handleInput}
+                           onkeydown={handleKeydown}/>
+                    <button type="button"
+                            class="composer__send"
+                            onclick={handleClickSend}
+                            aria-label="Send">&#10148;</button>
+                </div>
+            </div>
+
+            <!-- =========== Business inbox =========== -->
+            <div class="phone phone--biz" aria-label="Electra EV Business inbox">
+                <div class="phone__notch"></div>
+                <div class="phone__statusbar phone__statusbar--biz">
+                    <span>Electra EV Business</span>
+                    <span>WA Cloud</span>
+                </div>
+                <div class="chat__header chat__header--biz">
+                    <span class="avatar avatar--cust">{customerInitials}</span>
+                    <div class="chat__who">
+                        <span class="chat__name">{customerName}</span>
+                        <span class="chat__sub">{customerPhone}</span>
+                    </div>
+                </div>
+                <div class="bubbles bubbles--biz">
+                    <template lwc:if={hasMessages}>
+                        <template for:each={businessBubbles} for:item="m">
+                            <div key={m.id} class={m.bubbleClass}>
+                                <template lwc:if={m.isAgent}>
+                                    <span class="badge badge--ai">Agentforce</span>
+                                </template>
+                                <p class="bubble__text">{m.text}</p>
+                                <span class="bubble__ts">{m.ts}</span>
+                            </div>
+                        </template>
+                    </template>
+                    <template lwc:else>
+                        <div class="bubble bubble--in bubble--system">
+                            <p class="bubble__text">No messages yet.</p>
+                        </div>
+                    </template>
+                </div>
+                <div class="biz__footer">
+                    <span class="biz__autoreply">
+                        <span class="biz__dot"></span>
+                        Drive Electric &middot; Drive Electra
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</template>

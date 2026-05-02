@@ -1,0 +1,136 @@
+<template>
+    <div class={dockClass} style={dockStyle} aria-label="Electra EV social channels">
+
+        <!-- WhatsApp: opens modal chat -->
+        <div class="card-row">
+            <template lwc:if={tooltipVisible}>
+                <span class="tooltip">
+                    <span class="tooltip__text">{tooltipText}</span>
+                    <button type="button"
+                            class="tooltip__close"
+                            aria-label="Dismiss tooltip"
+                            onclick={handleTooltipDismiss}>&times;</button>
+                </span>
+            </template>
+            <button type="button"
+                    class="card card--whatsapp"
+                    style="--delay: 0ms;"
+                    aria-label="Open Express Booking chat on WhatsApp"
+                    onclick={handleWhatsAppClick}>
+                <span class="card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" width="22" height="22">
+                        <path fill="currentColor" d="M16.001 3C8.832 3 3 8.832 3 16c0 2.555.74 4.99 2.143 7.103L3 29l6.063-2.075A12.94 12.94 0 0016.001 29C23.169 29 29 23.168 29 16S23.169 3 16.001 3zm0 23.605a10.6 10.6 0 01-5.396-1.477l-.387-.231-3.6 1.231 1.176-3.51-.252-.402a10.6 10.6 0 0117.06-12.65 10.6 10.6 0 01-8.601 16.984zm5.823-7.972c-.319-.16-1.886-.93-2.18-1.036-.293-.107-.506-.16-.72.16-.213.32-.825 1.036-1.012 1.249-.187.213-.373.24-.692.08-.319-.16-1.347-.497-2.566-1.585-.948-.846-1.587-1.89-1.774-2.21-.187-.32-.02-.493.14-.652.144-.143.319-.373.479-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.72-1.733-.987-2.373-.26-.625-.524-.54-.72-.55-.187-.008-.4-.01-.613-.01-.213 0-.56.08-.853.4-.293.32-1.12 1.094-1.12 2.667s1.146 3.093 1.306 3.306c.16.213 2.253 3.44 5.46 4.823.763.33 1.358.526 1.823.673.766.244 1.464.21 2.014.127.615-.092 1.886-.77 2.152-1.516.267-.747.267-1.387.187-1.516-.08-.128-.293-.213-.612-.373z"/>
+                    </svg>
+                </span>
+            </button>
+        </div>
+
+        <!-- Instagram -->
+        <a href={instagramUrl}
+           target="_blank"
+           rel="noopener noreferrer"
+           class="card card--instagram"
+           style="--delay: 90ms;"
+           aria-label="Follow Electra EV on Instagram">
+            <span class="card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="22" height="22">
+                    <path fill="currentColor" d="M16 3c-3.53 0-3.97.015-5.357.078-1.384.063-2.328.282-3.155.602a6.36 6.36 0 00-2.3 1.498A6.36 6.36 0 003.69 7.478C3.37 8.305 3.15 9.249 3.087 10.633 3.025 12.02 3.01 12.46 3.01 16c0 3.54.015 3.98.078 5.367.063 1.384.282 2.328.602 3.155a6.36 6.36 0 001.498 2.3 6.36 6.36 0 002.3 1.498c.827.32 1.771.539 3.155.602C12.03 28.985 12.47 29 16 29c3.53 0 3.97-.015 5.357-.078 1.384-.063 2.328-.282 3.155-.602a6.36 6.36 0 002.3-1.498 6.36 6.36 0 001.498-2.3c.32-.827.539-1.771.602-3.155.063-1.387.078-1.827.078-5.367s-.015-3.98-.078-5.367c-.063-1.384-.282-2.328-.602-3.155a6.36 6.36 0 00-1.498-2.3 6.36 6.36 0 00-2.3-1.498c-.827-.32-1.771-.539-3.155-.602C19.97 3.015 19.53 3 16 3zm0 2.342c3.47 0 3.882.013 5.252.075 1.267.058 1.957.27 2.416.448a4.025 4.025 0 011.495.973 4.03 4.03 0 01.973 1.495c.179.46.39 1.149.448 2.416.062 1.37.075 1.782.075 5.251 0 3.47-.013 3.882-.075 5.252-.058 1.267-.27 1.957-.448 2.416a4.025 4.025 0 01-.973 1.495 4.03 4.03 0 01-1.495.973c-.46.179-1.149.39-2.416.448-1.37.062-1.782.075-5.252.075-3.47 0-3.882-.013-5.252-.075-1.267-.058-1.957-.27-2.416-.448a4.025 4.025 0 01-1.495-.973 4.03 4.03 0 01-.973-1.495c-.179-.46-.39-1.149-.448-2.416C5.355 19.882 5.342 19.47 5.342 16c0-3.47.013-3.882.075-5.252.058-1.267.27-1.957.448-2.416a4.025 4.025 0 01.973-1.495 4.03 4.03 0 011.495-.973c.46-.179 1.149-.39 2.416-.448C12.118 5.355 12.53 5.342 16 5.342zM16 9.33a6.671 6.671 0 100 13.342 6.671 6.671 0 000-13.342zm0 11A4.33 4.33 0 1116 11.671a4.33 4.33 0 010 8.659zm8.493-11.272a1.558 1.558 0 11-3.115 0 1.558 1.558 0 013.115 0z"/>
+                </svg>
+            </span>
+        </a>
+
+        <!-- Facebook -->
+        <a href={facebookUrl}
+           target="_blank"
+           rel="noopener noreferrer"
+           class="card card--facebook"
+           style="--delay: 180ms;"
+           aria-label="Visit Electra EV on Facebook">
+            <span class="card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="22" height="22">
+                    <path fill="currentColor" d="M29 16.087C29 8.86 23.18 3 16 3S3 8.86 3 16.087C3 22.617 7.755 28.029 13.969 29V19.87H10.67v-3.783h3.298v-2.886c0-3.275 1.94-5.084 4.911-5.084 1.423 0 2.911.255 2.911.255v3.215h-1.638c-1.616 0-2.12 1.01-2.12 2.046v2.454h3.605l-.576 3.783H18.03V29C24.245 28.029 29 22.617 29 16.087z"/>
+                </svg>
+            </span>
+        </a>
+
+    </div>
+
+    <!-- ============ WhatsApp chat modal ============ -->
+    <template lwc:if={chatOpen}>
+        <div class="scrim" onclick={handleScrimClick}>
+            <div class="phone" role="dialog" aria-label="WhatsApp chat with Electra EV">
+                <button type="button"
+                        class="phone__close"
+                        aria-label="Close chat"
+                        onclick={handleClose}>&times;</button>
+
+                <div class="phone__notch"></div>
+                <div class="phone__statusbar">
+                    <span>9:41</span>
+                    <span>5G &nbsp; 100%</span>
+                </div>
+                <div class="chat__header">
+                    <span class="avatar avatar--biz" aria-hidden="true">EV</span>
+                    <div class="chat__who">
+                        <span class="chat__name">{customerName}</span>
+                        <span class="chat__sub">online</span>
+                    </div>
+                    <button type="button"
+                            class="chat__reset"
+                            aria-label="Reset conversation"
+                            onclick={handleReset}>&#x21bb;</button>
+                </div>
+
+                <template lwc:if={lastError}>
+                    <div class="alert alert--error">{lastError}</div>
+                </template>
+
+                <div class="bubbles">
+                    <template lwc:if={hasMessages}>
+                        <template for:each={bubbles} for:item="m">
+                            <div key={m.id} class={m.bubbleClass}>
+                                <p class="bubble__text">{m.text}</p>
+                                <span class="bubble__ts">{m.ts}</span>
+                            </div>
+                        </template>
+                    </template>
+                    <template lwc:else>
+                        <div class="bubble bubble--in bubble--system">
+                            <p class="bubble__text">
+                                Hi! I'm the Electra EV assistant. Tap a quick reply or type a message to start your express booking.
+                            </p>
+                        </div>
+                    </template>
+                    <template lwc:if={isThinking}>
+                        <div class="bubble bubble--in bubble--typing">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="chips">
+                    <template for:each={quickReplies} for:item="q">
+                        <button key={q}
+                                type="button"
+                                data-text={q}
+                                class="chip"
+                                onclick={handleQuickReply}>{q}</button>
+                    </template>
+                </div>
+
+                <div class="composer">
+                    <input type="text"
+                           class="composer__input"
+                           placeholder="Type a message..."
+                           value={inputValue}
+                           oninput={handleInput}
+                           onkeydown={handleKeydown}/>
+                    <button type="button"
+                            class="composer__send"
+                            onclick={handleClickSend}
+                            aria-label="Send">&#10148;</button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

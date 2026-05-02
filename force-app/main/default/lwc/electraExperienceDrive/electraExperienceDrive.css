@@ -1,0 +1,215 @@
+:host {
+    --electra-primary: #1B4D3E;
+    --electra-accent: #00D4AA;
+    --electra-dark: #0A0A0A;
+    --electra-white: #FFFFFF;
+    --electra-gray: #666666;
+    --electra-text: #1A1A1A;
+    --electra-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    display: block;
+    font-family: var(--electra-font);
+    color: var(--electra-text);
+    background: var(--electra-white);
+}
+
+.xp { }
+
+.hero {
+    text-align: center;
+    padding: 5rem 1.5rem;
+    background: linear-gradient(135deg, var(--electra-primary) 0%, var(--electra-dark) 100%);
+    color: var(--electra-white);
+}
+
+.hero__title {
+    font-family: 'Aeromove', 'Inter', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.5rem;
+    color: var(--electra-white);
+}
+
+.hero__tagline {
+    font-size: 1.5rem;
+    color: var(--electra-accent);
+    font-weight: 500;
+    margin: 0 0 1rem;
+}
+
+.hero__desc {
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+}
+
+.section__title {
+    font-family: 'Aeromove', 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--electra-primary);
+    text-align: center;
+    margin: 0 0 2rem;
+}
+
+.steps {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.steps__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+.step {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.step__num {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: var(--electra-accent);
+    color: var(--electra-dark);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.step__title {
+    font-family: 'Aeromove', 'Inter', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.5rem;
+    color: var(--electra-text);
+}
+
+.step__desc {
+    color: var(--electra-gray);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.faq {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    background: #F7F8F8;
+    border-radius: 20px;
+}
+
+.faq__item {
+    background: var(--electra-white);
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.faq__q {
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--electra-text);
+    list-style: none;
+}
+
+.faq__q::after {
+    content: '+';
+    float: right;
+    color: var(--electra-primary);
+    font-weight: 700;
+}
+
+.faq__item[open] .faq__q::after {
+    content: '−';
+}
+
+.faq__a {
+    margin: 0.75rem 0 0;
+    color: var(--electra-gray);
+    line-height: 1.5;
+}
+
+.compare {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.compare__wrap {
+    overflow-x: auto;
+}
+
+.compare__table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--electra-white);
+    font-size: 0.95rem;
+}
+
+.compare__table th,
+.compare__table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.compare__table thead th {
+    background: var(--electra-primary);
+    color: var(--electra-white);
+    font-weight: 600;
+}
+
+.compare__table tbody th {
+    font-weight: 600;
+    color: var(--electra-text);
+    background: #F9FAFB;
+}
+
+.cta {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    background: #F7F8F8;
+}
+
+.cta__call {
+    margin: 1rem 0 0;
+    color: var(--electra-gray);
+    font-size: 0.9rem;
+}
+
+.btn {
+    border: 0;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn--primary {
+    background: var(--electra-accent);
+    color: var(--electra-dark);
+}
+
+.btn--primary:hover {
+    background: #00b894;
+}
+
+@media (max-width: 640px) {
+    .hero { padding: 3.5rem 1rem; }
+    .hero__title { font-size: 2.25rem; }
+    .hero__tagline { font-size: 1.2rem; }
+    .steps, .faq, .compare, .cta { padding: 2.5rem 1rem; }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <masterLabel>Electra Nav Bar</masterLabel>
+    <description>Branded top navigation bar for the Electra dealer portal: logo + Manager / Customers / Opportunities.</description>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightningCommunity__Default">
+            <!-- Deprecated: brand is now hardcoded ELECTRA + EV split to match electraTopNav. -->
+            <property name="brandText"
+                      type="String"
+                      label="Brand text (deprecated, ignored)"
+                      default="ELECTRA EV" />
+            <property name="logoUrl"
+                      type="String"
+                      label="Logo image URL (optional, overrides brand text)"
+                      default="" />
+            <property name="managerLabel"
+                      type="String"
+                      label="Manager link label"
+                      default="Manager" />
+            <property name="managerUrl"
+                      type="String"
+                      label="Manager link URL"
+                      default="/dealer/s/" />
+            <property name="customersLabel"
+                      type="String"
+                      label="Customers link label"
+                      default="Customers" />
+            <property name="customersUrl"
+                      type="String"
+                      label="Customers link URL"
+                      default="/dealer/s/customers" />
+            <property name="opportunitiesLabel"
+                      type="String"
+                      label="Opportunities link label"
+                      default="Opportunities" />
+            <property name="opportunitiesUrl"
+                      type="String"
+                      label="Opportunities link URL"
+                      default="/dealer/s/opportunities" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
