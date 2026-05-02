@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Rep__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Dealership sales rep assigned to handle this test drive. Used as Opportunity owner on auto-create.</description>
+    <label>Sales Rep</label>
+    <referenceTo>User</referenceTo>
+    <relationshipLabel>Test Drives (Sales Rep)</relationshipLabel>
+    <relationshipName>Test_Drives_As_Sales_Rep</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

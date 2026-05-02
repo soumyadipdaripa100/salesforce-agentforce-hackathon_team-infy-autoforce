@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booking_Reference__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Booking Reference</label>
+    <referenceTo>Test_Drive__c</referenceTo>
+    <relationshipLabel>Available Slots</relationshipLabel>
+    <relationshipName>Available_Slots</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
