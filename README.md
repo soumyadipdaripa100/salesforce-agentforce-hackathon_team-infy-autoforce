@@ -45,10 +45,8 @@ The result: **1% → 8-12% projected conversion**, **10-minute → 30-second boo
 *Agent 3- Test Drive WhatsApp Agent (customer-facing, WhatsApp / messaging)
 **Type:** Externalcopilot / EinsteinServiceAgent
 - **1 Topic:** Test Drive Using WhatsApp - guided slot-filling conversation tuned for the WhatsApp surface (asks one question at a time: name → email → vehicle → showroom → date → time)
-45
 - **4 Apex actions** (`TD_GetShowrooms`, `TD_GetvehicleModels`,`TD_CheckAvailableslots`,`TD_CreateBooking`) plus the standard `AnswerQuestionswithKnowledge` planner action
--Channel-specific surface targeting (Messaging + Customerwebclient) with rich content enabled and verified-user rule expression for context-aware responses
-planner action
+- Channel-specific surface targeting (Messaging + Customerwebclient) with rich content enabled and verified-user rule expression for context-aware responses
 - Reuses the same backend Apex stack as the Concierge - same data, same booking pipeline - proving the channel-agnostic architecture
 
 ## Key Differentiators
@@ -56,10 +54,10 @@ planner action
 1. **Experience Drive** - car delivered to customer's doorstep for a full day; the only Salesforce hackathon entry to capture this differentiator from the premium-EV market
 2. **Six-signal Intent Scoring** - 
 3. **Lead Personalization** - `TD_PersonalizeLead` enriches every Lead at creation with intent score, intent tier (VIP/High/Medium/Low), and preferred model - sales reps see qualified leads, not cold ones
-4. **Three-Agent Oraherton most hackation ya budd one es dele rak for it interne titing con danger book, no the dealer dies up to a gait a trace tine.
+4. **Abandon Recovery** - daily `TD_AbandonRecovery` Apex job creates dealer tasks for high-itent visitors who didn't book, so the dealer wakes up to a qualified outreach list
+5. **Three-Agent Orchestration** - most hackathon teams build one agent. We built three - a customer-facing Concierge, a channel-specialised Whatsapp variant, and a dealer-facing Advisor - wired through a shared apex backend
 Advisor - wired through a shared Apex backend
-6. **Fu11 Lifecycle** - pre-drive reminder, post-drive follow-up,
-no-show recovery, abandon recovery (all native Flows +Apex; Mc Next-ready architecture
+6. **Full Lifecycle** - pre-drive reminder, post-drive follow-up, no-show recovery, abandon recovery (all native Flows +Apex; Mc Next-ready architecture
 7. **Automotive Cloud Native** - every vehicle is a "VehicleDefinition" record (51 EV-specific fields) - not a custom object
 
 ---
