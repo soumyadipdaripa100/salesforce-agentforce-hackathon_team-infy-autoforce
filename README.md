@@ -42,7 +42,7 @@ The result: **1% → 8-12% projected conversion**, **10-minute → 30-second boo
 - **7 Action registrations** wrapping 5 Apex classes (`TD_Agent_Dealer*` family)
 - Sales rep types `"Priya just arrived"` → status updates, welcome email auto-fires, Sales_Rep stamped. Types `"Log outcome — very interested, send a quote"` → Opportunity auto-creates with model-based pricing
 
-*Agent 3- Test Drive WhatsApp Agent (customer-facing, WhatsApp / messaging)
+### Agent 3 — Test Drive WhatsApp Agent (customer-facing, WhatsApp / messaging)
 **Type:** Externalcopilot / EinsteinServiceAgent
 - **1 Topic:** Test Drive Using WhatsApp - guided slot-filling conversation tuned for the WhatsApp surface (asks one question at a time: name → email → vehicle → showroom → date → time)
 - **4 Apex actions** (`TD_GetShowrooms`, `TD_GetvehicleModels`,`TD_CheckAvailableslots`,`TD_CreateBooking`) plus the standard `AnswerQuestionswithKnowledge` planner action
@@ -93,16 +93,9 @@ Advisor - wired through a shared Apex backend
 
 ---
 
-## License
-
-MIT. This is Team Electra's original work, produced for the Salesforce Agentforce National Hackathon 2026.
-
----
-
 ## Credits & Acknowledgments
 
 - **Electra Cars** is a fictional EV OEM created for hackathon purposes. No real OEM brand identity is used.
 - Test customer names (Priya, Alex, Maya, Sarah, John, Sam) are fictional.
 - Built on **Salesforce Agentforce, Data Cloud, Automotive Cloud, Digital Engagement, Flow, Apex, Lightning Web Components, Experience Cloud**, and Omnistudio.
 - Inspired by the premium-EV test drive programs of Tesla (48-hour), Volvo (Test Drive+), BMW (Home Test Drive), and Porsche (At-Home).
-- Developed by Infosys Salesforce practice in collaboration with the Fluido MVP Partner Program.
