@@ -1,0 +1,15 @@
+{
+  "required" : [ "zipCodes" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "zipCodes" : {
+      "title" : "Zip Code",
+      "description" : "Customer's 5-digit zip code to find the nearest active Electra dealership.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

@@ -1,0 +1,38 @@
+{
+  "required" : [ "bookingId", "outcome" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "bookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the Test_Drive__c record. If unknown, call TDD_Get_Bookings to find it.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "outcome" : {
+      "title" : "Outcome",
+      "description" : "Customer interest level. Valid values: Very Interested, Interested, Undecided, Not Interested.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "notes" : {
+      "title" : "Notes",
+      "description" : "Free-form sales rep notes about the drive.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "nextAction" : {
+      "title" : "Next Action",
+      "description" : "Recommended follow-up: Send Quote, Send Brochure, Schedule Follow-up, Schedule Second Drive, None.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "competitor" : {
+      "title" : "Competitor",
+      "description" : "Competing brand mentioned (e.g. BMW i7, Tesla Model S). Blank if none.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

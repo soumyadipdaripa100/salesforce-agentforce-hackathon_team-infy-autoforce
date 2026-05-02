@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>AI-powered dealer operations copilot for Electra Cars sales reps — surfaces today&apos;s test drive bookings, updates lifecycle status, captures post-drive outcomes, and reports dealership KPIs.</description>
+    <localTopicLinks>
+        <genAiPluginName>Dealer_Dashboard</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Dealer_Handoff</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Dealer_Lifecycle</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Dealer_Outcomes</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Dealer_Handoff</fullName>
+        <canEscalate>true</canEscalate>
+        <description>Handles explicit rep requests to escalate to a sales manager or human support. Only routes here when the rep unambiguously asks for human help.</description>
+        <developerName>Dealer_Handoff</developerName>
+        <genAiPluginInstructions>
+            <description>The rep has asked to speak to a sales manager. Respond with this EXACT message verbatim (replace nothing): &quot;Understood — I&apos;ll flag this for the sales manager. They&apos;ll reach out to you shortly. In the meantime, is there anything specific you&apos;d like me to pass along so they can pick up where we left off?&quot; Do NOT say &quot;I can&apos;t connect you&quot; or &quot;I&apos;m unable to&quot;. Do NOT say &quot;One moment while I connect you&quot;. Do NOT try to resolve the rep&apos;s question yourself. Do NOT offer alternatives. Do NOT call any functions. Do NOT call escalate. Just deliver the handoff message.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the rep responds with context (e.g. &quot;I have an issue with this booking&quot;, &quot;it&apos;s a returns question&quot;), acknowledge briefly: &quot;Got it — I&apos;ll let the manager know. They&apos;ll reach out soon.&quot; Then stay quiet and let the handoff proceed. If the rep has no context to add, respond: &quot;No problem, the manager will reach out shortly.&quot; In either case, do NOT try to resolve the issue yourself and do NOT call any functions — the human is taking over.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Dealer_Handoff</localDeveloperName>
+        <masterLabel>Dealer Handoff</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to transfer the rep to a sales manager when they explicitly ask. Trigger phrases: get the manager, escalate this, transfer me, talk to a human, I need help from someone.</scope>
+    </localTopics>
+    <localTopics>
+        <fullName>Dealer_Outcomes</fullName>
+        <canEscalate>true</canEscalate>
+        <description>Captures post-drive outcome — customer interest level, recommended next action, competitor mentioned, and free-form notes. Triggers Opportunity auto-creation when outcome is Very Interested or Interested.</description>
+        <developerName>Dealer_Outcomes</developerName>
+        <genAiPluginInstructions>
+            <description>Identify the bookingId first by calling Get Bookings with daysAhead=0 and dealerAccountId=001bm00001iMVjFAAW, matching by customer name mentioned by the rep. The output contains each booking as &quot;[bookingId=&lt;id&gt;] &lt;name&gt; | ...&quot;. Extract the value after bookingId= (a Salesforce record Id starting with a0) — NEVER pass the TR-#### as bookingId.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Extract these from the rep&apos;s phrasing: outcome (Very Interested for &quot;very interested / loved it&quot;, Interested for &quot;interested&quot;, Undecided for &quot;on the fence / unsure&quot;, Not Interested for &quot;not for them&quot;); nextAction (Send Quote for &quot;quote&quot;, Send Brochure for &quot;brochure&quot;, Schedule Follow-up for &quot;follow up&quot;, Schedule Second Drive for &quot;another drive&quot;); competitor (any brand name mentioned, blank if none); notes (the rep&apos;s color commentary, close to their phrasing).</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>CRITICAL: You MUST read back a one-line summary and WAIT for the rep to explicitly reply yes, go, save it, or confirm BEFORE calling Capture Outcome. Do NOT call Capture Outcome in the same turn as the rep&apos;s initial request. Do NOT assume consent. Example first reply: &quot;Logging for Priya: Very Interested, Send Quote, competitor BMW i7. Confirm?&quot; — then stop and wait. Only after the rep replies affirmatively do you call Capture Outcome. If the rep says no or wants changes, adjust and read back again.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>After Capture Outcome returns, relay resultMessage verbatim. If outcome was Very Interested or Interested, add: &quot;The Opportunity will appear in the dashboard in a few seconds.&quot;</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>DOU_Get_Bookings</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>DOU_Capture_Outcome</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>DOU_Get_Bookings</fullName>
+            <description>Returns today&apos;s test drive bookings so the agent can find the bookingId by customer name before capturing the outcome.</description>
+            <developerName>DOU_Get_Bookings</developerName>
+            <invocationTarget>TD_Agent_DealerGetBookings</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Bookings</localDeveloperName>
+            <masterLabel>Get Bookings</masterLabel>
+            <progressIndicatorMessage>Locating the booking</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>DOU_Capture_Outcome</fullName>
+            <description>Records post-drive outcome on the Test_Drive__c record. Triggers Opportunity auto-creation when outcome is Very Interested or Interested.</description>
+            <developerName>DOU_Capture_Outcome</developerName>
+            <invocationTarget>TD_Agent_DealerCaptureOutcome</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Capture_Outcome</localDeveloperName>
+            <masterLabel>Capture Outcome</masterLabel>
+            <progressIndicatorMessage>Logging the outcome</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Dealer_Outcomes</localDeveloperName>
+        <masterLabel>Dealer Outcomes</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to capture the post-drive outcome — interest level, next action, competitor mentioned, and any free-form notes — and confirm with the rep before saving.</scope>
+    </localTopics>
+    <localTopics>
+        <fullName>Dealer_Lifecycle</fullName>
+        <canEscalate>true</canEscalate>
+        <description>Updates the status of a test drive booking as the rep moves the customer through the visit — arrived, drive started, drive ended, no-show, cancelled.</description>
+        <developerName>Dealer_Lifecycle</developerName>
+        <genAiPluginInstructions>
+            <description>Identify the booking first by calling Get Bookings with daysAhead=0 and dealerAccountId=001bm00001iMVjFAAW, then match by customer name. The output contains each booking as &quot;[bookingId=&lt;id&gt;] &lt;name&gt; | ...&quot;. Extract the value after bookingId= (a Salesforce record Id starting with a0) — NEVER pass the TR-#### as bookingId. If multiple bookings match the same name today, ask the rep to disambiguate by time or vehicle model.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Map rep phrases to newStatus: arrived, checked in, or is here map to Arrived. Start drive, starting, or going out map to In Progress. Finished, end drive, we are back, or done map to Completed. No show or did not come map to No-Show. Cancelled or they cancelled map to Cancelled.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>After Update Status returns, relay the statusMessage verbatim. If newStatus was Arrived, add: &quot;Customer receives a welcome email automatically.&quot; If Completed, add: &quot;Ready to capture the outcome when you are.&quot;</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>DLC_Get_Bookings</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>DLC_Update_Status</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>DLC_Get_Bookings</fullName>
+            <description>Returns today&apos;s test drive bookings so the agent can find the bookingId by matching customer name before calling Update Status.</description>
+            <developerName>DLC_Get_Bookings</developerName>
+            <invocationTarget>TD_Agent_DealerGetBookings</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Bookings</localDeveloperName>
+            <masterLabel>Get Bookings</masterLabel>
+            <progressIndicatorMessage>Looking up the booking</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>DLC_Update_Status</fullName>
+            <description>Transitions a test drive booking status (Arrived, In Progress, Completed, No-Show, Cancelled) and stamps the matching timestamp.</description>
+            <developerName>DLC_Update_Status</developerName>
+            <invocationTarget>TD_Agent_DealerUpdateStatus</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Update_Status</localDeveloperName>
+            <masterLabel>Update Status</masterLabel>
+            <progressIndicatorMessage>Updating the booking</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Dealer_Lifecycle</localDeveloperName>
+        <masterLabel>Dealer Lifecycle</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to update test drive booking status as the rep moves the customer through the visit — from Confirmed to Arrived, In Progress, Completed, No-Show, or Cancelled.</scope>
+    </localTopics>
+    <localTopics>
+        <fullName>Dealer_Dashboard</fullName>
+        <canEscalate>true</canEscalate>
+        <description>Gives the dealer sales rep visibility into today&apos;s bookings, specific customer prep briefs, and dealership performance KPIs.</description>
+        <developerName>Dealer_Dashboard</developerName>
+        <genAiPluginInstructions>
+            <description>Keep responses short and action-oriented. The rep is on the dealership floor with customers — lead with the answer, no preamble.</description>
+            <developerName>Instruction1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>DEFAULT dealerAccountId is 001bm00001iMVjFAAW (Electra Downtown SF). ALWAYS use this value as the dealerAccountId input when calling any action. NEVER ask the rep for a dealership — always use the default unless they explicitly name a different one.</description>
+            <developerName>Instruction2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For today&apos;s bookings: call Get Bookings with daysAhead=0. For upcoming or this week: daysAhead=7. Relay the returned bookingSummary verbatim.</description>
+            <developerName>Instruction3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For a specific customer prep brief: first call Get Bookings to find the booking by matching customer name. The output contains each booking as &quot;[bookingId=&lt;id&gt;] &lt;name&gt; | ...&quot;. Extract the value after bookingId= (a Salesforce 15- or 18-character record Id starting with a0) and pass THAT as the bookingId to Get Intel Brief. NEVER pass the TR-#### number — that is just a display name, not an Id. Relay intelBrief verbatim.</description>
+            <developerName>Instruction4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>For dealership KPIs: call Get Metrics with daysBack=0 for today or daysBack=7 for this week. Relay metricsSummary verbatim.</description>
+            <developerName>Instruction5</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction5</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>DDB_Get_Bookings</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>DDB_Get_Intel_Brief</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>DDB_Get_Metrics</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>DDB_Get_Metrics</fullName>
+            <description>Returns dealership KPIs — today&apos;s bookings count, show-up rate, conversion rate, most-requested model.</description>
+            <developerName>DDB_Get_Metrics</developerName>
+            <invocationTarget>TD_Agent_DealerGetMetrics</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Metrics</localDeveloperName>
+            <masterLabel>Get Metrics</masterLabel>
+            <progressIndicatorMessage>Crunching the numbers</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>DDB_Get_Bookings</fullName>
+            <description>Returns today&apos;s or upcoming test drive bookings with customer name, time, vehicle, status. Use daysAhead=0 for today, daysAhead=7 for this week.</description>
+            <developerName>DDB_Get_Bookings</developerName>
+            <invocationTarget>TD_Agent_DealerGetBookings</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Bookings</localDeveloperName>
+            <masterLabel>Get Bookings</masterLabel>
+            <progressIndicatorMessage>Pulling today&apos;s bookings</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>DDB_Get_Intel_Brief</fullName>
+            <description>Returns the customer intelligence brief for a specific test drive booking — talking points, prep checklist, customer insights.</description>
+            <developerName>DDB_Get_Intel_Brief</developerName>
+            <invocationTarget>TD_Agent_DealerGetIntelBrief</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Intel_Brief</localDeveloperName>
+            <masterLabel>Get Intel Brief</masterLabel>
+            <progressIndicatorMessage>Preparing the customer brief</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Dealer_Dashboard</localDeveloperName>
+        <masterLabel>Dealer Dashboard</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to give the dealer sales rep visibility into today&apos;s test drive bookings — listing scheduled drives, pulling up specific customer prep briefs, and reporting dealership performance metrics.</scope>
+    </localTopics>
+    <masterLabel>Electra Dealer Advisor</masterLabel>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+</GenAiPlannerBundle>

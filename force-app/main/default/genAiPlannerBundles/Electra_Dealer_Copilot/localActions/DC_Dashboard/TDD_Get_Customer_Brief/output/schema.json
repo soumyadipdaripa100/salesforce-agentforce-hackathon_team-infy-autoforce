@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "intelBrief" : {
+      "title" : "Customer Intel Brief",
+      "description" : "Model-specific talking points, prep checklist, customer insights. Relay verbatim to the rep.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

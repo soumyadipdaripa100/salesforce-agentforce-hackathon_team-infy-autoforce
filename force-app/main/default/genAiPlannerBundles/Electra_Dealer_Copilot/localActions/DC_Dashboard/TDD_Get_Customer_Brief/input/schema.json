@@ -1,0 +1,14 @@
+{
+  "required" : [ "bookingId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "bookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the Test_Drive__c booking. If unknown, first call Get Bookings to discover it, then match by customer name.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

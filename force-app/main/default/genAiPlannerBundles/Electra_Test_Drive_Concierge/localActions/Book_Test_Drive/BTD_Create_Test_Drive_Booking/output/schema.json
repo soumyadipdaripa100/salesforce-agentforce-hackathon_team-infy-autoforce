@@ -1,0 +1,32 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "bookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the created Test Drive booking record. Pass this to Send Confirmation and Create Dealer Task.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "confirmationMessage" : {
+      "title" : "Confirmation Message",
+      "description" : "Pre-formatted confirmation message — relay verbatim to the customer. On failure, contains the clarification prompt (e.g. 'I need a clearer time').",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "leadId" : {
+      "title" : "Lead Id",
+      "description" : "Id of the created Lead record.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "success" : {
+      "title" : "Success",
+      "description" : "True if the booking was created. If false, read confirmationMessage — it explains what the customer needs to clarify.",
+      "lightning:type" : "lightning__booleanType",
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

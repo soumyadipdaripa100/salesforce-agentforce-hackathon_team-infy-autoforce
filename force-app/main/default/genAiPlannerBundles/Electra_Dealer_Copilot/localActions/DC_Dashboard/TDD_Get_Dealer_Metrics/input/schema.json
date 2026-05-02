@@ -1,0 +1,20 @@
+{
+  "required" : [ "dealerAccountId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "dealerAccountId" : {
+      "title" : "Dealer Account Id",
+      "description" : "Dealership Account Id. DEFAULT to 001bm00001iMVjGAAW (Electra Downtown SF). NEVER ask the rep — always use the default.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "daysBack" : {
+      "title" : "Days Back",
+      "description" : "0 = today only (default). 7 = this week.",
+      "lightning:type" : "lightning__numberType",
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

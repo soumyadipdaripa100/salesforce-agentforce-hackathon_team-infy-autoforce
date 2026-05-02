@@ -1,0 +1,13 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "outputTaskId" : {
+      "title" : "Task Id",
+      "description" : "Id of the created dealer prep Task.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

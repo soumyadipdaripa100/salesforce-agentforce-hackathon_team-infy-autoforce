@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "bookingSummary" : {
+      "title" : "Booking Summary",
+      "description" : "Formatted list of bookings (customer name, time, model, status). Relay verbatim to the rep.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

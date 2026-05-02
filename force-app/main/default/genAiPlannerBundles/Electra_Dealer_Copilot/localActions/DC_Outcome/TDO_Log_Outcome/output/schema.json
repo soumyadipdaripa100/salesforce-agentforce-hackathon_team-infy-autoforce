@@ -1,0 +1,14 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "resultMessage" : {
+      "title" : "Result Message",
+      "description" : "Confirmation like 'Outcome captured for TD-0001: Very Interested. Opportunity auto-creation in progress.' Relay verbatim.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

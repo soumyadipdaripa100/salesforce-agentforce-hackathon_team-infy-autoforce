@@ -1,0 +1,20 @@
+{
+  "required" : [ "inputBookingId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "inputBookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the Test Drive booking record to send confirmation for. Use the bookingId returned by Create Test Drive Booking.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "inputChannel" : {
+      "title" : "Channel",
+      "description" : "Channel for confirmation (Web Chat, WhatsApp, SMS, Phone). Defaults to Web Chat if omitted.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

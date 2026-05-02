@@ -1,0 +1,50 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "dealershipId" : {
+      "title" : "Dealership Account Id",
+      "description" : "Account Id of the matched dealership. Use this value as the dealershipId input to Check Available Slots and Create Test Drive Booking.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "dealershipName" : {
+      "title" : "Dealership Name",
+      "description" : "Name of the matched dealership.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "address" : {
+      "title" : "Address",
+      "description" : "Full street address of the dealership.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true
+    },
+    "phone" : {
+      "title" : "Phone",
+      "description" : "Dealership phone number.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true
+    },
+    "city" : {
+      "title" : "City",
+      "description" : "City of the dealership.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true
+    },
+    "state" : {
+      "title" : "State",
+      "description" : "State of the dealership.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true
+    },
+    "found" : {
+      "title" : "Found",
+      "description" : "True if a dealership was matched for the given zip code. If false, offer the customer an Experience Drive as alternative.",
+      "lightning:type" : "lightning__booleanType",
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

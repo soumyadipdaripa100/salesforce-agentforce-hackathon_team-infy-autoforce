@@ -1,0 +1,14 @@
+{
+  "required" : [ "inputBookingId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "inputBookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the Test Drive booking to create the dealer prep Task for. Use the bookingId returned by Create Test Drive Booking.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

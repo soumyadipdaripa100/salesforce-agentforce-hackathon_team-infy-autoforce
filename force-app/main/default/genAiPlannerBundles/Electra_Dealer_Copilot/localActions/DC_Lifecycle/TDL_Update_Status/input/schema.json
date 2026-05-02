@@ -1,0 +1,20 @@
+{
+  "required" : [ "bookingId", "newStatus" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "bookingId" : {
+      "title" : "Booking Id",
+      "description" : "Id of the Test_Drive__c record. If unknown, first call TDD_Get_Bookings to find the bookingId by customer name.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "newStatus" : {
+      "title" : "New Status",
+      "description" : "Valid values: Scheduled, Confirmed, Arrived, In Progress, Completed, No-Show, Cancelled. Map rep phrasing per instructions.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>AI-powered test drive booking and vehicle information assistant for Electra Cars — books Standard Drives at dealerships and Experience Drives delivered to the customer&apos;s doorstep.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jbm000001Ttwb</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>Test_Drive_Using_Whatsapp_16jbm000001Ttwb</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Test_Drive_Using_Whatsapp_16jbm000001Ttwb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This topic will be invoked when the user wants to book a test drive.</description>
+        <developerName>Test_Drive_Using_Whatsapp_16jbm000001Ttwb</developerName>
+        <genAiPluginInstructions>
+            <description>ALWAYS ask the following question as mentioned below:
+1. Name of the customer
+2. Email of the customer
+3. Vehicle interested in
+4. Showroom of preference
+5. Ask for the date of test drive
+6. Time Slot.</description>
+            <developerName>instructions_0_1777537996508</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1777537996508</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>ALWAYS ask the question one by one. Never ask the question together.</description>
+            <developerName>instructions_1_1777537996508</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_1_1777537996508</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Display the list of showrooms in a nicely formatted manner. Id of the showroom should not be displayed on the chat.</description>
+            <developerName>instructions_2_1777537996508</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_2_1777537996508</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Display the list of vehicles in a nicely formatted manner</description>
+            <developerName>instructions_3_1777537996508</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_3_1777537996508</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Display the list of available slots in a nicely formatted manner.</description>
+            <developerName>instruction_1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Create a test drive booking by executing the action &quot;TD_CreateBooking &quot;</description>
+            <developerName>instruction_2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Showrooms_179bm000002e9WT</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Get_Vehicle_Models_179bm000002e9WT</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Check_Available_Slots_179bm000002e9WT</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Create_Test_Drive_Booking_179bm000002e9WT</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Create_Test_Drive_Booking_179bm000002e9WT</fullName>
+            <description>Creates a Lead and Test Drive booking record, marks the time slot as booked. Use ONLY after customer explicitly confirms all details.</description>
+            <developerName>Create_Test_Drive_Booking_179bm000002e9WT</developerName>
+            <invocationTarget>TD_CreateBooking</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Create_Test_Drive_Booking</localDeveloperName>
+            <masterLabel>Create Test Drive Booking</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>Get_Vehicle_Models_179bm000002e9WT</fullName>
+            <description>Returns a formatted list of all available Electra vehicle models with specs and pricing. Use when customer asks about models or hasnt specified one.</description>
+            <developerName>Get_Vehicle_Models_179bm000002e9WT</developerName>
+            <invocationTarget>TD_GetVehicleModels</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Vehicle_Models</localDeveloperName>
+            <masterLabel>Get Vehicle Models</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>Check_Available_Slots_179bm000002e9WT</fullName>
+            <description>Returns every available time slot on the requested date, grouped by showroom. Use after the customer states a preferred date.</description>
+            <developerName>Check_Available_Slots_179bm000002e9WT</developerName>
+            <invocationTarget>TD_CheckAvailableSlots</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Check_Available_Slots</localDeveloperName>
+            <masterLabel>Check Available Slots</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>Get_Showrooms_179bm000002e9WT</fullName>
+            <description>Returns the four Electra showroom Accounts (name, account id, city, state, zip, phone). No filters.</description>
+            <developerName>Get_Showrooms_179bm000002e9WT</developerName>
+            <invocationTarget>TD_GetShowrooms</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Showrooms</localDeveloperName>
+            <masterLabel>Get Showrooms</masterLabel>
+        </localActions>
+        <localDeveloperName>Test_Drive_Using_Whatsapp</localDeveloperName>
+        <masterLabel>Test Drive Using Whatsapp</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to collect information from the customer and book test drive.</scope>
+    </localTopics>
+    <masterLabel>Test Drive Whatsapp Agent</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jbm000001Ttwb</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jbm000001Ttwb</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+    <ruleExpressions>
+        <conditions>
+            <leftOperand>isVerified</leftOperand>
+            <leftOperandType>Variable</leftOperandType>
+            <operator>equal</operator>
+            <rightOperandValue>true</rightOperandValue>
+        </conditions>
+        <expression>Verified_User</expression>
+        <expressionLabel>Verified User</expressionLabel>
+        <expressionName>Verified_User</expressionName>
+        <expressionType>sel</expressionType>
+    </ruleExpressions>
+</GenAiPlannerBundle>

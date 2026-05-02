@@ -1,0 +1,20 @@
+{
+  "required" : [ "dealershipId", "preferredDate" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "dealershipId" : {
+      "title" : "Dealership Account Id",
+      "description" : "The Account Id of the dealership to check slots for. Use the dealershipId returned by Find Nearest Dealership.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "preferredDate" : {
+      "title" : "Preferred Date",
+      "description" : "The date to check for available slots. Must be a specific Date (YYYY-MM-DD). Convert natural-language dates like 'this Saturday' before calling.",
+      "lightning:type" : "lightning__dateType",
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

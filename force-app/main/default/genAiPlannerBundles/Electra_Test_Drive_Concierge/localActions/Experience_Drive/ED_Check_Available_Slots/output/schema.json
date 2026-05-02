@@ -1,0 +1,20 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "slotList" : {
+      "title" : "Available Slot List",
+      "description" : "Comma-separated list of available time slots (e.g. '10:00 AM, 11:00 AM, 2:00 PM'), or a message explaining why none are available.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "slotsAvailable" : {
+      "title" : "Slots Available",
+      "description" : "True if at least one slot is available on the requested date.",
+      "lightning:type" : "lightning__booleanType",
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}

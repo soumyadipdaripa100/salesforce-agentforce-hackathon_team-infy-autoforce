@@ -1,0 +1,71 @@
+{
+  "required" : [ "customerName", "email", "vehicleModelName", "preferredDate", "preferredTime", "zipCode", "dealershipId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "customerName" : {
+      "title" : "Customer Full Name",
+      "description" : "Full name of the customer (first + last, e.g. 'Priya Sharma').",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : true,
+      "copilotAction:isUserInput" : true
+    },
+    "email" : {
+      "title" : "Email",
+      "description" : "Customer email address for booking confirmation.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : true,
+      "copilotAction:isUserInput" : true
+    },
+    "phone" : {
+      "title" : "Phone",
+      "description" : "Customer phone number. Optional for Standard Drive; REQUIRED for Experience Drive (delivery coordinator calls).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : true,
+      "copilotAction:isUserInput" : true
+    },
+    "vehicleModelName" : {
+      "title" : "Vehicle Model Name",
+      "description" : "Electra GT, Electra SUV, Electra Sedan, or Electra Crossover.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "preferredDate" : {
+      "title" : "Preferred Date",
+      "description" : "Date for the test drive. Must be an explicit Date (YYYY-MM-DD). Convert natural-language like 'this Saturday' before calling.",
+      "lightning:type" : "lightning__dateType",
+      "copilotAction:isUserInput" : true
+    },
+    "preferredTime" : {
+      "title" : "Preferred Time",
+      "description" : "Time for the test drive. MUST include AM/PM (e.g. '2:00 PM') or be 24-hour with hour greater than 12 (e.g. '14:00'). Ambiguous times like '2:00' are rejected by the action — clarify with the customer first.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "zipCode" : {
+      "title" : "Zip Code",
+      "description" : "Customer 5-digit zip code.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : true
+    },
+    "dealershipId" : {
+      "title" : "Dealership Account Id",
+      "description" : "Account Id of the assigned dealership (from Find Nearest Dealership output).",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "channel" : {
+      "title" : "Booking Channel",
+      "description" : "Channel the booking came from: Web Chat, WhatsApp, SMS, or Phone. Defaults to Web Chat.",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    },
+    "driveType" : {
+      "title" : "Drive Type",
+      "description" : "Standard Drive (default) or Experience Drive (home delivery).",
+      "lightning:type" : "lightning__textType",
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}
