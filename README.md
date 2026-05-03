@@ -7,9 +7,9 @@
 
 ## Demo Video
 
-Submission video: **[5-minute walkthrough] (https://[your-youtube-or-drive-ur1-here])** *(replace with final URL before submitting)*
+Submission video: **[5-minute walkthrough] (https://infosystechnologies-my.sharepoint.com/personal/amit_agarwal18_ad_infosys_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Famit_agarwal18_ad_infosys_com%2FDocuments%2FMicrosoft+Teams+Chat+Files%2FSalesforce+Agentforce+Hackathon.mp4&referrer=StreamWebApp.web&referrerScenario=AddressBarCopied.view.d38641c2-bf76-4320-8319-f9dd277f80ea&ct=1777795474089&or=Teams-HL&ga=1&LOF=1)**
 
-For the live presentation deck, see docs/Electra_Concierge_Deck.pdf (or "-pptx).
+For the live presentation deck, visit **https://infosystechnologies-my.sharepoint.com/:b:/r/personal/amit_agarwal18_ad_infosys_com/Documents/Microsoft%20Teams%20Chat%20Files/Electra_Concierge_Deck%201.pdf?csf=1&web=1&e=KtPw7O**
 
 ---
 
